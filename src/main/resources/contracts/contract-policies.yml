@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  title: Gestion de Pólizas
+  description: API para la gestión de pólizas y partes de seguros de automóviles.
+  version: 1.0.0
+servers:
+  - url: https://localhost:8081/policies
+  - url: https://localhost:8081/parts
+
+tags:
+  - name: policies
+    description: Operaciones sobre pólizas
+  - name: parts
+    description: Operaciones sobre partes de siniestros
+
+paths:
+  /policies:
+    post:
+      tags:
+        - policies
+      summary: Creación de una póliza
+      description: Crea una nueva póliza en el sistema
+      operationId: savePolicy
+      requestBody:
+        required: true
+        description: Póliza a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '201':
+          description: Póliza creada correctamente
+    get:
+      tags:
+        - policies
+      summary: Obtener todas las pólizas
+      operationId: getAllPolicies
+      responses:
+        '200':
+          description: Lista de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+
+  /policies/{id}:
+    get:
+      tags:
+        - policies
+      summary: Obtener detalles de una póliza
+      operationId: getPolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles de la póliza
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+    put:
+      tags:
+        - policies
+      summary: Actualizar una póliza existente
+      operationId: updatePolicy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos actualizados de la póliza
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '200':
+          description: Póliza actualizada correctamente
+        '404':
+          description: Póliza no encontrada
+    delete:
+      tags:
+        - policies
+      summary: Eliminar una póliza
+      operationId: deletePolicyById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Póliza eliminada correctamente
+
+  /policies/user/{userId}:
+    get:
+      tags:
+        - policies
+      summary: Obtener pólizas por ID de usuario
+      operationId: getPoliciesByUserId
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de pólizas del usuario
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+
+  /policies/vehicle/{vehicleId}:
+    get:
+      tags:
+        - policies
+      summary: Obtener pólizas por ID de vehículo
+      operationId: getPoliciesByVehicleId
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de pólizas del vehículo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+
+  /parts:
+    post:
+      tags:
+        - parts
+      summary: Crear un parte de siniestro
+      operationId: savePart
+      requestBody:
+        required: true
+        description: Parte a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '201':
+          description: Parte creado correctamente
+    get:
+      tags:
+        - parts
+      summary: Obtener todos los partes
+      operationId: getAllParts
+      responses:
+        '200':
+          description: Lista de partes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+
+components:
+  schemas:
+    Policy:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        vehicleId:
+          type: integer
+        beneficiaryId:
+          type: integer
+        policyNumber:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        coverageType:
+          type: string
+          enum:
+            - BASIC
+            - FULL
+        premiumAmount:
+          type: number
+          format: double
+        boolean:
+          type: boolean
+      required:
+        - userId
+        - vehicleId
+        - beneficiaryId
+        - policyNumber
+        - startDate
+        - endDate
+        - coverageType
+        - premiumAmount
+
+    Part:
+      type: object
+      properties:
+        id:
+          type: integer
+        policyId:
+          type: integer
+        thirdPartyId:
+          type: integer
+        thirdPartyVehicleId:
+          type: integer
+        placeEvent:
+          type: string
+        description:
+          type: string
+        accidentDate:
+          type: string
+          format: date-time
+        dateOfRegistration:
+          type: string
+          format: date-time
+        dateOfLastUpdate:
+          type: string
+          format: date-time
+        statePart:
+          type: string
+          enum:
+            - REPORTADO
+            - EN_PROCESO
+            - RECHAZADO
+            - CERRADO
+      required:
+        - policyId
+        - description
+        - accidentDate
+        - dateOfRegistration
+        - statePart
