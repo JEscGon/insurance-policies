@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "policies")
-public class Policy {
+public class PolicyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +24,22 @@ public class Policy {
     @Column(name = "beneficiary_id")
     private Long benefitaryId;
 
-    @Column(name = "policy_number" , nullable = false)
-    private String policyNumber;
+    @Column(name = "iban" , nullable = false)
+    private String iban;
 
     @Column(name = "start_date" , nullable = false)
     private LocalDate startDate;
-
     @Column(name = "end_date" , nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "coverage_type" , nullable = false)
-    private PolicyType coverageType;
+    private PolicyTypeEntity policyTypeEntity;
 
     private Boolean active;
 
     private Long premiumAmount;
+
+    @OneToMany
+    private List<PartEntity> partEntities;
 
 
 }

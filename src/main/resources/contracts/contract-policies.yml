@@ -193,7 +193,7 @@ components:
           type: integer
         beneficiaryId:
           type: integer
-        policyNumber:
+        iban:
           type: string
         startDate:
           type: string
@@ -209,13 +209,13 @@ components:
         premiumAmount:
           type: number
           format: double
-        boolean:
+        active:
           type: boolean
       required:
         - userId
         - vehicleId
         - beneficiaryId
-        - policyNumber
+        - iban
         - startDate
         - endDate
         - coverageType

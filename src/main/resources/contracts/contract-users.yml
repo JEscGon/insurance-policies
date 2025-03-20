@@ -1,0 +1,721 @@
+openapi: 3.0.0
+info:
+  title: Gestión de Usuarios & Vehiculos
+  description: API para el servicio de gestión de usuarios y vehiculos.
+  version: 1.0.0
+servers:
+  - url: https://localhost:8080/users
+  - url: https://localhost:8080/vehicles
+
+tags:
+  - name: users
+    description: Operations about users
+  - name: vehicles
+    description: Operations about vehicles
+  - name: third_users
+    description: Operations about third_users
+  - name: third_vehicles
+    description: Operations about third_vehicles
+
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Creación de un usuario
+      description: Creación de un usuario en la base de datos
+      operationId: save
+      requestBody:
+        required: true
+        description: Usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuario creado
+    get:
+      tags:
+        - users
+      summary: Obtener todos los usuarios
+      operationId: findAllUsers
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Obtener los detalles de un usuario
+      operationId: findById
+      parameters:
+        - in: path
+          name: id
+          description: 'The id that needs to be fetched.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: operation OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - users
+      summary: Eliminar un usuario
+      operationId: deleteUserById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Usuario eliminado
+    put:
+      tags:
+        - users
+      summary: Actualizar un usuario existente
+      description: Actualiza la información de un usuario identificado por su ID
+      operationId: updateUser
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del usuario a actualizar'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos actualizados del usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuario actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /users/dni/{dni}:
+    get:
+      tags:
+        - users
+      summary: Obtener un usuario por DNI
+      operationId: getUserByDni
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/email/{email}:
+    get:
+      tags:
+        - users
+      summary: Obtener un usuario por email
+      operationId: getUserByEmail
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalles del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /vehicles:
+    get:
+      tags:
+        - vehicles
+      summary: Obtener todos los vehículos
+      description: Devuelve una lista con todos los vehículos registrados
+      operationId: getAllVehicles
+      responses:
+        '200':
+          description: Lista de vehículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+    post:
+      tags:
+        - vehicles
+      summary: Añade un nuevo vehículo
+      description: Registra un nuevo vehículo en el sistema
+      operationId: saveVehicle
+      requestBody:
+        required: true
+        description: Vehículo a añadir
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          description: Vehículo creado correctamente
+
+  /vehicles/{id}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra un vehículo por ID
+      description: Devuelve un único vehículo
+      operationId: getVehicleById
+      parameters:
+        - in: path
+          name: id
+          description: 'The id that needs to be fetched.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          description: Vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+    put:
+      tags:
+        - vehicles
+      summary: Actualiza un vehículo existente
+      description: Actualiza un vehículo identificado por su id con los nuevos datos
+      operationId: updateVehicle
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del vehículo a actualizar'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Datos actualizados del vehículo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '200':
+          description: Vehículo actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - vehicles
+      summary: Elimina un vehículo
+      description: Elimina un vehículo del sistema
+      operationId: deleteVehicleById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Vehículo eliminado correctamente
+
+  /vehicles/matricula/{matricula}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra un vehículo por matrícula
+      description: Devuelve un vehículo buscando por su matrícula
+      operationId: findByMatricula
+      parameters:
+        - name: matricula
+          in: path
+          description: Matrícula del vehículo
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vehicle'
+        '404':
+          description: Vehículo no encontrado
+
+  /vehicles/user/{idUser}:
+    get:
+      tags:
+        - vehicles
+      summary: Encuentra vehículos por ID de usuario
+      description: Devuelve una lista de vehículos que pertenecen a un usuario específico
+      operationId: getVehiclesByUserId
+      parameters:
+        - name: idUser
+          in: path
+          description: ID del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+
+  /third_users:
+    post:
+      tags:
+        - third_users
+      summary: Creación de un tercer usuario
+      description: Creación de un tercer usuario en la base de datos
+      operationId: saveThirdUser
+      requestBody:
+        required: true
+        description: Tercer usuario a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserThird'
+      responses:
+        '201':
+          description: Tercer usuario creado
+    get:
+      tags:
+        - third_users
+      summary: Obtener todos los terceros usuarios
+      operationId: findAllThirdUsers
+      responses:
+        '200':
+          description: Lista de terceros usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserThird'
+
+  /third_users/{id}:
+    get:
+      tags:
+        - third_users
+      summary: Obtener los detalles de un tercer usuario
+      operationId: findThirdUserById
+      parameters:
+        - in: path
+          name: id
+          description: 'El id que necesita ser buscado.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserThird'
+        '400':
+          description: Id inválido suministrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - third_users
+      summary: Eliminar un tercer usuario
+      operationId: deleteThirdUserById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Tercer usuario eliminado
+    put:
+      tags:
+        - third_users
+      summary: Actualizar un tercer usuario existente
+      description: Actualiza la información de un tercer usuario identificado por su ID
+      operationId: updateThirdUser
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del tercer usuario a actualizar'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Datos actualizados del tercer usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserThird'
+      responses:
+        '200':
+          description: Tercer usuario actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+
+  /third_vehicles:
+    post:
+      tags:
+        - third_vehicles
+      summary: Añade un nuevo tercer vehículo
+      description: Registra un nuevo tercer vehículo en el sistema
+      operationId: saveThirdVehicle
+      requestBody:
+        required: true
+        description: Tercer vehículo a añadir
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleThird'
+      responses:
+        '201':
+          description: Tercer vehículo creado correctamente
+    get:
+      tags:
+        - third_vehicles
+      summary: Obtener todos los terceros vehículos
+      description: Devuelve una lista con todos los terceros vehículos registrados
+      operationId: getAllThirdVehicles
+      responses:
+        '200':
+          description: Lista de terceros vehículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleThird'
+
+  /third_vehicles/{id}:
+    get:
+      tags:
+        - third_vehicles
+      summary: Encuentra un tercer vehículo por ID
+      description: Devuelve un único tercer vehículo
+      operationId: getThirdVehicleById
+      parameters:
+        - in: path
+          name: id
+          description: 'El id que necesita ser buscado.'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleThird'
+        '404':
+          description: Tercer vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    put:
+      tags:
+        - third_vehicles
+      summary: Actualiza un tercer vehículo existente
+      description: Actualiza un tercer vehículo identificado por su id con los nuevos datos
+      operationId: updateThirdVehicle
+      parameters:
+        - in: path
+          name: id
+          description: 'ID del tercer vehículo a actualizar'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Datos actualizados del tercer vehículo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VehicleThird'
+      responses:
+        '200':
+          description: Tercer vehículo actualizado correctamente
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: Tercer vehículo no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      tags:
+        - third_vehicles
+      summary: Elimina un tercer vehículo
+      description: Elimina un tercer vehículo del sistema
+      operationId: deleteThirdVehicleById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Tercer vehículo eliminado correctamente
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        password:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vehicle'
+
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        userId:
+          type: integer
+          example: 1
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        marca:
+          type: string
+          example: "Toyota"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
+    UserThird:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        dni:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        dateOfRegistration:
+          type: string
+          format: date
+        dateOfLastUpdate:
+          type: string
+          format: date
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleThird'
+
+    VehicleThird:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        userThirdId:
+          type: integer
+        matricula:
+          type: string
+          example: "1234ABC"
+        km:
+          type: integer
+          example: 50000
+        marca:
+          type: string
+          example: "Toyota"
+        aseguradora:
+          type: string
+          example: "Mapfre"
+        fechaFabricacion:
+          type: string
+          format: date
+          example: "2020-01-01"
+        dateOfRegistration:
+          type: string
+          format: date
+          example: "2023-05-15"
+        dateOfLastUpdate:
+          type: string
+          format: date
+          example: "2024-02-20"
+      required:
+        - idUser
+        - matricula
+        - km
+        - marca
+        - fechaFabricacion
+
+    ErrorMessage:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        description:
+          type: string

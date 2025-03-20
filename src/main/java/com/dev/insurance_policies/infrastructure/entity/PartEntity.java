@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "parts")
-public class Part {
+public class PartEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Part {
     @Column(name = "third_party_vehicle_id")
     private Long thirdPartyVehicleId;
 
-    @Column(name = "place_evemt")
+    @Column(name = "place_event")
     private String placeEvent;
 
     private String description;
@@ -42,6 +42,6 @@ public class Part {
     private LocalDateTime dateOfLastUpdate;
 
     //TODO: hacer relacion con la tabla de estados
-    private State statePart;
+    private StateEntity statePart;
 
 }
