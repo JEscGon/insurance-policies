@@ -135,8 +135,8 @@
 							<generatorName>spring</generatorName>
 							<output>${project.build.directory}/generated-sources/openapi</output>
 							<modelNameSuffix>Dto</modelNameSuffix>
-							<apiPackage>com.dev.insurance_users.generated.controller.api</apiPackage>
-							<modelPackage>com.dev.insurance_users.generated.controller.model</modelPackage>
+							<apiPackage>com.dev.insurance_policies.generated.controller.api</apiPackage>
+							<modelPackage>com.dev.insurance_policies.generated.controller.model</modelPackage>
 							<configOptions>
 								<interfaceOnly>true</interfaceOnly>
 								<useSpringBoot3>true</useSpringBoot3>
@@ -154,8 +154,8 @@
 							<generatorName>java</generatorName>
 							<library>resttemplate</library>
 							<modelNameSuffix>ClientDto</modelNameSuffix>
-							<apiPackage>com.dev.insurance_policies.generated.client.api</apiPackage>
-							<modelPackage>com.dev.insurance_policies.generated.client.model</modelPackage>
+							<apiPackage>com.dev.insurance_users.generated.client.api</apiPackage>
+							<modelPackage>com.dev.insurance_users.generated.client.model</modelPackage>
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>
 								<useBeanValidation>true</useBeanValidation>

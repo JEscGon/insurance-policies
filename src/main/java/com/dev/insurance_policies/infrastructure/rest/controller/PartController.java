@@ -1,8 +1,8 @@
 package com.dev.insurance_policies.infrastructure.rest.controller;
 
 import com.dev.insurance_policies.application.service.PartService;
+import com.dev.insurance_policies.generated.controller.api.PartsApi;
 import com.dev.insurance_policies.infrastructure.rest.controller.mapper.PartDtoMapper;
-import com.dev.insurance_users.generated.api.PartsApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

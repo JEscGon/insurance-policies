@@ -33,5 +33,6 @@ public class StateRepositoryImpl implements StateRepository {
 
     @Override
     public void deleteById(Long id) {
+
     }
 }

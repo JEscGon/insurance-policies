@@ -30,7 +30,7 @@ public class PolicyEntity {
     private Boolean active;
     private Long premiumAmount;
 
-    @OneToMany(mappedBy = "policyId")
+    @OneToMany(mappedBy = "policy")
     private List<PartEntity> parts;
 
 

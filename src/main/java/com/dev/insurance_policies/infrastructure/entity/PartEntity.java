@@ -18,7 +18,7 @@ public class PartEntity {
 
     @ManyToOne
     @JoinColumn(name = "policy_id")
-    private PolicyEntity policyId;
+    private PolicyEntity policy;
 
     @ManyToOne
     @JoinColumn(name = "third_party_id")
