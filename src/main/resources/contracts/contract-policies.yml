@@ -12,8 +12,85 @@ tags:
     description: Operaciones sobre pólizas
   - name: parts
     description: Operaciones sobre partes de siniestros
+  - name: policyTypes
+    description: Operaciones sobre tipos de pólizas
+  - name: states
+    description: Operaciones sobre estados
 
 paths:
+  /policyTypes:
+    get:
+      tags:
+        - policyTypes
+      summary: Obtener todos los tipos de pólizas
+      operationId: getAllPolicyTypes
+      responses:
+        '200':
+          description: Lista de tipos de pólizas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyType'
+
+  /policyTypes/{id}:
+    get:
+      tags:
+        - policyTypes
+      summary: Obtener un tipo de póliza por ID
+      operationId: getPolicyTypeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de póliza encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyType'
+        '404':
+          description: Tipo de póliza no encontrado
+  /states:
+    get:
+      tags:
+        - states
+      summary: Obtener todos los estados
+      operationId: getAllStates
+      responses:
+        '200':
+          description: Lista de estados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/State'
+  /states/{id}:
+    get:
+      tags:
+        - states
+      summary: Obtener un estado por ID
+      operationId: getStateById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Estado encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/State'
+        '404':
+          description: Estado no encontrado
   /policies:
     post:
       tags:
@@ -105,49 +182,45 @@ paths:
         '204':
           description: Póliza eliminada correctamente
 
-  /policies/user/{userId}:
+  /policies/user/{dni}:
     get:
       tags:
         - policies
-      summary: Obtener pólizas por ID de usuario
-      operationId: getPoliciesByUserId
+      summary: Obtener póliza por DNI de usuario
+      operationId: getPolicyByDni
       parameters:
         - in: path
-          name: userId
+          name: dni
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: Lista de pólizas del usuario
+          description: Póliza del usuario
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Policy'
+                $ref: '#/components/schemas/Policy'
 
-  /policies/vehicle/{vehicleId}:
+  /policies/vehicle/{matricula}:
     get:
       tags:
         - policies
-      summary: Obtener pólizas por ID de vehículo
-      operationId: getPoliciesByVehicleId
+      summary: Obtener póliza por matrícula del vehículo
+      operationId: getPolicyByMatricula
       parameters:
         - in: path
-          name: vehicleId
+          name: matricula
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: Lista de pólizas del vehículo
+          description: póliza del vehículo
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Policy'
+                $ref: '#/components/schemas/Policy'
 
   /parts:
     post:
@@ -182,6 +255,32 @@ paths:
 
 components:
   schemas:
+    PolicyType:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+
+    State:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+
     Policy:
       type: object
       properties:
@@ -201,16 +300,13 @@ components:
         endDate:
           type: string
           format: date
-        coverageType:
-          type: string
-          enum:
-            - BASIC
-            - FULL
+        policyTypeId:
+          type: integer
+        active:
+          type: boolean
         premiumAmount:
           type: number
           format: double
-        active:
-          type: boolean
       required:
         - userId
         - vehicleId
@@ -218,7 +314,7 @@ components:
         - iban
         - startDate
         - endDate
-        - coverageType
+        - policyTypeId
         - premiumAmount
 
     Part:
@@ -245,16 +341,11 @@ components:
         dateOfLastUpdate:
           type: string
           format: date-time
-        statePart:
-          type: string
-          enum:
-            - REPORTADO
-            - EN_PROCESO
-            - RECHAZADO
-            - CERRADO
+        stateId:
+          type: integer
       required:
         - policyId
         - description
         - accidentDate
         - dateOfRegistration
-        - statePart
+        - stateId

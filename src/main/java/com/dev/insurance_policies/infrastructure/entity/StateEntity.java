@@ -1,21 +1,23 @@
 package com.dev.insurance_policies.infrastructure.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum StateEntity {
+@Setter
+@Table(name = "state")
+public class StateEntity {
 
-    REPORTADO("Reportado", "Parte reportado"),
-    EN_PROCESO("En proceso", "Parte en proceso"),
-    RECHAZADO("Rechazado", "Parte rechazado"),
-    CERRADO("Cerrado", "Parte cerrado");
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String name;
-    private final String description;
+    @Column(nullable = false)
+    private String name;
 
-    StateEntity(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    @Column(nullable = false)
+    private String description;
 
 }
