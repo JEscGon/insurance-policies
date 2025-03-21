@@ -1,3 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/insurance-policies
+    username: 'postgres'
+    password: 'root'
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: 'none'
+    show-sql: true
+    generate-ddl: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 server:
     port: 8081
 

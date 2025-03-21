@@ -1,19 +1,23 @@
 package com.dev.insurance_policies.infrastructure.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum PolicyTypeEntity {
+@Setter
+@Table(name = "policy_type")
+public class PolicyTypeEntity {
 
-    BASIC("Básico", "Cobertura a terceros"),
-    FULL("Completo", "Cobertura a todo riesgo");
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String name;
-    private final String description;
+    @Column(nullable = false)
+    private String name;
 
-    PolicyTypeEntity(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    @Column(nullable = false)
+    private String description;
 
 }

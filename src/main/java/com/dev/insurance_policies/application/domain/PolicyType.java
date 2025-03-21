@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PolicyType {
-
+    private Long id;
     private String name;
     private String description;
 
