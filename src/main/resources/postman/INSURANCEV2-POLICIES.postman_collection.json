@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "30e66303-93f3-4456-8fc3-e47537963dca",
+		"name": "INSURANCEV2-POLICIES",
+		"description": "Crear un usuario: POST [http://localhost:8080/users](http://localhost:8080/users)  \nObtener un usuario por ID: GET [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})  \nObtener todos los usuarios: GET [http://localhost:8080/users](http://localhost:8080/users)  \nActualizar un usuario por ID: PUT [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})  \nEliminar un usuario por ID: DELETE [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "21757430"
+	},
+	"item": [
+		{
+			"name": "Policies",
+			"item": [
+				{
+					"name": "savePolicy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 4,\r\n  \"vehicleId\": 5,\r\n  \"beneficiaryId\": 1,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES91210004180532\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/policies"
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userId\": 0,\r\n  \"vehicleId\": 0,\r\n  \"beneficiaryId\": 0,\r\n  \"iban\": \"string\",\r\n  \"startDate\": \"2025-03-26\",\r\n  \"endDate\": \"2025-03-26\",\r\n  \"policyTypeId\": 0,\r\n  \"active\": true,\r\n  \"premiumAmount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/policies"
+					},
+					"response": []
+				},
+				{
+					"name": "FindByID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userId\": 0,\r\n  \"vehicleId\": 0,\r\n  \"beneficiaryId\": 0,\r\n  \"iban\": \"string\",\r\n  \"startDate\": \"2025-03-26\",\r\n  \"endDate\": \"2025-03-26\",\r\n  \"policyTypeId\": 0,\r\n  \"active\": true,\r\n  \"premiumAmount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/policies/3"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userId\": 0,\r\n  \"vehicleId\": 0,\r\n  \"beneficiaryId\": 0,\r\n  \"iban\": \"string\",\r\n  \"startDate\": \"2025-03-26\",\r\n  \"endDate\": \"2025-03-26\",\r\n  \"policyTypeId\": 0,\r\n  \"active\": true,\r\n  \"premiumAmount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/policies/3"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 4,\r\n  \"vehicleId\": 5,\r\n  \"beneficiaryId\": 1,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES91210004180532\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/policies/1"
+					},
+					"response": []
+				},
+				{
+					"name": "findByMatricula",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/policies/matricula/1234123"
+					},
+					"response": []
+				},
+				{
+					"name": "findByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/policies/user/3"
+					},
+					"response": []
+				},
+				{
+					"name": "findByDni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/policies/dni/312312"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parts",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/parts"
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"policyId\": 1,\r\n  \"thirdPartyId\": 1,\r\n  \"thirdPartyVehicleId\": 1,\r\n  \"placeEvent\": \"string\",\r\n  \"description\": \"string\",\r\n  \"accidentDate\": \"2025-03-26T20:31:33.311Z\",\r\n  \"dateOfRegistration\": \"2025-03-26T20:31:33.311Z\",\r\n  \"stateId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/parts"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"policyId\": 1,\r\n  \"thirdPartyId\": 1,\r\n  \"thirdPartyVehicleId\": 1,\r\n  \"placeEvent\": \"string\",\r\n  \"description\": \"string\",\r\n  \"accidentDate\": \"2025-03-26T20:31:33.311Z\",\r\n  \"dateOfRegistration\": \"2025-03-26T20:31:33.311Z\",\r\n  \"dateOfLastUpdate\": \"2025-03-26T20:31:33.311Z\",\r\n  \"stateId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/parts/1"
+					},
+					"response": []
+				},
+				{
+					"name": "findAllByPolicyId",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
