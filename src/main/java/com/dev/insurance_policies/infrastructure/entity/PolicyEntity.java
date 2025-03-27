@@ -16,22 +16,36 @@ public class PolicyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long userId;
     private Long vehicleId;
-    private Long benefitaryId;
-    private String iban;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Long beneficiaryId;
 
     @ManyToOne
     @JoinColumn(name = "policy_type_id")
     private PolicyTypeEntity policyType;
 
+    @Column(unique = true)
+    private String iban;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @Column(name = "registration_date")
+    private LocalDate registrationDate;
+
+    @Column(name = "last_update_date")
+    private LocalDate lastUpdateDate;
+
     private Boolean active;
+
+    @Column(name = "premium_amount")
     private Long premiumAmount;
 
     @OneToMany(mappedBy = "policy")
     private List<PartEntity> parts;
-
 
 }

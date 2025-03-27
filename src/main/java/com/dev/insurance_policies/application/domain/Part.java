@@ -10,14 +10,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Part {
+
     private Long id;
+
     private Long policyId;
     private Long thirdPartyId;
     private Long thirdPartyVehicleId;
+    private Long stateId;
+
     private String placeEvent;
     private String description;
+
     private LocalDateTime accidentDate;
     private LocalDateTime dateOfRegistration;
     private LocalDateTime dateOfLastUpdate;
-    private Long state;
 }
