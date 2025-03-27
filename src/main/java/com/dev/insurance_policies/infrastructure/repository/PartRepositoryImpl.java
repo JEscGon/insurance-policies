@@ -20,22 +20,22 @@ public class PartRepositoryImpl implements PartRepository {
     private final PartMapper partMapper;
     private final PartJpaRepository partJpaRepository;
 
+    //TODO : FIX
     @Override
     public void save(Part part) {
         var partEntity = partMapper.fromDomainToEntity(part);
-        Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
         if(part.getId() == null){
             partEntity.setDateOfRegistration(LocalDateTime.now());
-        }
-        else {
+        } else {
+            Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
             if(partEntityOptional.isPresent()){
-              var existingPart = partEntityOptional.get();
-              partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
-              partEntity.setDateOfLastUpdate(LocalDateTime.now());
-              partMapper.updatePartFromExisting(existingPart, partEntity);
+                var existingPart = partEntityOptional.get();
+                partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
+                partEntity.setDateOfLastUpdate(LocalDateTime.now());
+                partMapper.updatePartFromExisting(existingPart, partEntity);
             }
-            partJpaRepository.save(partEntity);
         }
+        partJpaRepository.save(partEntity);
     }
 
     @Override
@@ -52,6 +52,13 @@ public class PartRepositoryImpl implements PartRepository {
     @Override
     public List<Part> findAll() {
         return partJpaRepository.findAll().stream()
+                .map(partMapper::fromEntityToDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Part> findAllByPolicyId(String policyId) {
+        return partJpaRepository.findAllByPolicyId(Long.valueOf(policyId)).stream()
                 .map(partMapper::fromEntityToDomain)
                 .collect(Collectors.toList());
     }

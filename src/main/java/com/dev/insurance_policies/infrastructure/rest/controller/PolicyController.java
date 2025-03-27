@@ -57,6 +57,7 @@ public class PolicyController implements PoliciesApi {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @Override
     public ResponseEntity<Void> updatePolicy(String id, PolicyDto policyDto) {
         try {
@@ -87,10 +88,12 @@ public class PolicyController implements PoliciesApi {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
-
-
-
-
+    @Override
+    public ResponseEntity<PolicyDto> getPolicyByUserId(Integer userId) {
+        Optional<Policy> policyOptional = policyService.findByUserId(userId);
+        return policyOptional
+                .map(policy -> new ResponseEntity<>(policyDtoMapper.fromDomainToDto(policy), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 }

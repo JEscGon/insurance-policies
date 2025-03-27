@@ -35,4 +35,26 @@ public class PartController implements PartsApi {
         return new ResponseEntity<>(partDtos, HttpStatus.OK);
     }
 
+
+    @Override     //TODO : Implementar findById
+    public ResponseEntity<PartDto> getPartById(Integer id){
+        return partService.findById(Long.valueOf(id))
+                .map(part -> new ResponseEntity<>(partDtoMapper.fromDomainToDto(part), HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    //TODO: Implementar deleteById
+    public ResponseEntity<Void> deletePartById(Integer id){
+        partService.deletePartById(Long.valueOf(id));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @Override //TODO: findAllbyPolicyId
+    public ResponseEntity<List<PartDto>> getPartsByPolicyId(Integer policyId) {
+        List<PartDto> partDtos = partService.getPartsByPolicyId(String.valueOf(policyId)).stream()
+                .map(partDtoMapper::fromDomainToDto)
+                .toList();
+        return new ResponseEntity<>(partDtos, HttpStatus.OK);
+    }
 }

@@ -27,10 +27,10 @@ public class PartEntity {
 
     //    @ManyToOne
     @Column(name = "third_party_id")
-    private Long thirdParty;
+    private Long thirdPartyId;
     //    @ManyToOne
     @Column(name = "third_party_vehicle_id")
-    private Long thirdPartyVehicle;
+    private Long thirdPartyVehicleId;
 
     private String placeEvent;
     private String description;

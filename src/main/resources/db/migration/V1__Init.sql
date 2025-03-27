@@ -53,6 +53,6 @@ CREATE TABLE parts (
     description TEXT,
     accident_date TIMESTAMP NOT NULL,
     date_of_registration TIMESTAMP NOT NULL,
-    date_of_last_update TIMESTAMP NOT NULL,
+    date_of_last_update TIMESTAMP NULL,
     state_id BIGINT REFERENCES state(id)
 );

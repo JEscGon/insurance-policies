@@ -11,5 +11,6 @@ public interface PartRepository {
     public Optional<Part> findById(Long id);
     public void deleteById(Long id);
     public List<Part> findAll();
+    public List<Part> findAllByPolicyId(String policyId);
 
 }

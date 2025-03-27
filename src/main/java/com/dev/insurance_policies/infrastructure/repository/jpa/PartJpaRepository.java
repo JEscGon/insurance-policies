@@ -13,5 +13,6 @@ public interface PartJpaRepository extends JpaRepository<PartEntity, Long> {
     List<PartEntity> findAll();
     void deleteById(Long id);
     Optional<PartEntity> findById(Long id);
+    List<PartEntity> findAllByPolicyId(Long policyId);
 
 }

@@ -277,6 +277,26 @@ paths:
                 items:
                   $ref: '#/components/schemas/Part'
   /parts/{id}:
+    get:
+      tags:
+        - parts
+      summary: Obtener un parte por ID
+      operationId: getPartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Parte encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Part'
+        '404':
+          description: Parte no encontrado
     put:
       tags:
         - parts
@@ -300,6 +320,45 @@ paths:
           description: Parte actualizado correctamente
         '404':
           description: Parte no encontrado
+    delete:
+      tags:
+        - parts
+      summary: Eliminar un parte de siniestro
+      operationId: deletePartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Parte eliminado correctamente
+        '404':
+          description: Parte no encontrado
+
+  /parts/policy/{policyId}:
+    get:
+      tags:
+        - parts
+      summary: Obtener partes por ID de póliza
+      operationId: getPartsByPolicyId
+      parameters:
+        - in: path
+          name: policyId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de partes asociados a la póliza
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Part'
+
 
 components:
   schemas:

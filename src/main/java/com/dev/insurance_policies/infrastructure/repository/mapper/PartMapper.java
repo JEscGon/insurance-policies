@@ -15,6 +15,8 @@ public interface PartMapper {
     @Mapping(source = "state.id", target = "stateId")
     Part fromEntityToDomain(PartEntity partEntity);
 
+    @Mapping(source = "stateId", target = "state.id")
+    @Mapping(source = "policyId", target = "policy.id")
     PartEntity fromDomainToEntity(Part part);
 
     void updatePartFromExisting(@MappingTarget PartEntity target, PartEntity source);

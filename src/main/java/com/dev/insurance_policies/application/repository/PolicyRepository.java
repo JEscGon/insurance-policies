@@ -10,8 +10,6 @@ public interface PolicyRepository {
     public Optional<Policy> findById(Long id);
     public List<Policy> findAll();
     public void deleteById(Long id);
-
-    Optional<Policy> findByMatricula(String matricula);
     Optional<Policy> findByUserId(Long userId);
 
 }

@@ -3,7 +3,6 @@ import com.dev.insurance_policies.application.domain.Policy;
 import com.dev.insurance_policies.application.repository.PolicyRepository;
 
 import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
-import com.dev.insurance_users.generated.client.api.ThirdVehiclesApi;
 import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ public class PolicyService {
     private final UsersApi usersApi;
     private final VehiclesApi vehiclesApi;
     private final ThirdUsersApi thirdUsersApi;
-    private final ThirdVehiclesApi thirdVehicleApi;
 
     public void save(Policy policy) {
         var auxUser = usersApi.findById(String.valueOf(policy.getUserId()));
@@ -51,9 +49,7 @@ public class PolicyService {
 
     public Optional<Policy> findByMatricula(String matricula) {
         var auxVehicle = vehiclesApi.findByMatricula(matricula);
-        //TODO: Meter en thirdVehicleApi un findByMatricula
-        // var auxVehicle2 = thirdVehicleApi.
-        if(auxVehicle == null || auxVehicle.getId() == null){
+        if (auxVehicle == null || auxVehicle.getId() == null) {
             throw new RuntimeException("Vehicle not found");
         }
         return policyRepository.findByUserId(Long.valueOf(auxVehicle.getUserId()));
@@ -67,5 +63,7 @@ public class PolicyService {
         return policyRepository.findByUserId(Long.valueOf(auxUser.getId()));
     }
 
-
+    public Optional<Policy> findByUserId(Integer userId) {
+        return policyRepository.findByUserId(Long.valueOf(userId));
+    }
 }
