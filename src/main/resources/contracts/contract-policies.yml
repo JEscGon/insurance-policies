@@ -1,3 +1,4 @@
+
 openapi: 3.0.0
 info:
   title: Gestion de Pólizas
@@ -182,7 +183,7 @@ paths:
         '204':
           description: Póliza eliminada correctamente
 
-  /policies/user/{dni}:
+  /policies/dni/{dni}:
     get:
       tags:
         - policies
@@ -222,6 +223,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Policy'
 
+  /policies/user/{userId}:
+    get:
+      tags:
+        - policies
+      summary: Obtener póliza por ID de usuario
+      operationId: getPolicyByUserId
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Póliza del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '404':
+          description: Póliza no encontrada
+
+
   /parts:
     post:
       tags:
@@ -252,6 +276,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Part'
+  /parts/{id}:
+    put:
+      tags:
+        - parts
+      summary: Actualizar un parte de siniestro existente
+      operationId: updatePart
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Datos actualizados del parte
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Part'
+      responses:
+        '200':
+          description: Parte actualizado correctamente
+        '404':
+          description: Parte no encontrado
 
 components:
   schemas:
@@ -307,6 +355,14 @@ components:
         premiumAmount:
           type: number
           format: double
+        registrationDate:
+          type: string
+          format: date
+          example: "2023-05-15"
+        lastUpdateDate:
+          type: string
+          format: date
+          example: "2024-02-20"
       required:
         - userId
         - vehicleId
@@ -316,6 +372,8 @@ components:
         - endDate
         - policyTypeId
         - premiumAmount
+        - registrationDate
+        - lastUpdateDate
 
     Part:
       type: object
@@ -349,3 +407,17 @@ components:
         - accidentDate
         - dateOfRegistration
         - stateId
+        
+    ErrorMessage:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string
+        description:
+          type: string
+        

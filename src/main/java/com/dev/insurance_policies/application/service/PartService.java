@@ -21,7 +21,6 @@ public class PartService {
         return partRepository.findById(id);
     }
 
-
     public void deletePartById(Long id) {
         partRepository.deleteById(id);
     }

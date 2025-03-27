@@ -2,13 +2,16 @@ package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.repository.PartRepository;
+import com.dev.insurance_policies.infrastructure.entity.PartEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,22 +22,38 @@ public class PartRepositoryImpl implements PartRepository {
 
     @Override
     public void save(Part part) {
-
+        var partEntity = partMapper.fromDomainToEntity(part);
+        Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
+        if(part.getId() == null){
+            partEntity.setDateOfRegistration(LocalDateTime.now());
+        }
+        else {
+            if(partEntityOptional.isPresent()){
+              var existingPart = partEntityOptional.get();
+              partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
+              partEntity.setDateOfLastUpdate(LocalDateTime.now());
+              partMapper.updatePartFromExisting(existingPart, partEntity);
+            }
+            partJpaRepository.save(partEntity);
+        }
     }
 
     @Override
     public Optional<Part> findById(Long id) {
-        return Optional.empty();
+        return partJpaRepository.findById(id)
+                .map(partMapper::fromEntityToDomain);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        partJpaRepository.deleteById(id);
     }
 
     @Override
     public List<Part> findAll() {
-        return List.of();
+        return partJpaRepository.findAll().stream()
+                .map(partMapper::fromEntityToDomain)
+                .collect(Collectors.toList());
     }
 
 

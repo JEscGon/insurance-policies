@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:postgresql://localhost:5432/insurance-policies
     username: 'postgres'
@@ -6,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: 'none'
+      ddl-auto: 'update'
     show-sql: true
     generate-ddl: false
   flyway:

@@ -13,5 +13,6 @@ public interface PolicyJpaRepository extends JpaRepository<PolicyEntity, Long> {
     List<PolicyEntity> findAll();
     Optional<PolicyEntity> findById(Long id);
     void deleteById(Long id);
+    Optional<PolicyEntity> findByUserId(Long userId);
 
 }

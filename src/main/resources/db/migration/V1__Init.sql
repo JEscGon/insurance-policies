@@ -1,3 +1,6 @@
+-- Establecer el esquema
+SET search_path TO public;
+
 -- Crear tabla PolicyType
 CREATE TABLE policy_type (
     id SERIAL PRIMARY KEY,
@@ -30,9 +33,11 @@ CREATE TABLE policies (
     user_id BIGINT NOT NULL,
     vehicle_id BIGINT NOT NULL,
     beneficiary_id BIGINT NOT NULL,
-    iban VARCHAR(34) NOT NULL,
+    iban VARCHAR(34) NOT NULL UNIQUE,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    registration_date DATE NOT NULL,
+    last_update_date DATE NULL,
     policy_type_id BIGINT REFERENCES policy_type(id),
     active BOOLEAN NOT NULL,
     premium_amount BIGINT NOT NULL

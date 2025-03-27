@@ -1,6 +1,5 @@
 spring:
   application:
     name: insurance-policies
-
-profiles:
-  active: local
+  profiles:
+    active: local

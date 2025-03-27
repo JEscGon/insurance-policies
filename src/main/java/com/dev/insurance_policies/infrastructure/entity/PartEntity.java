@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "parts")
 public class PartEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,20 +22,21 @@ public class PartEntity {
     private PolicyEntity policy;
 
     @ManyToOne
-    @JoinColumn(name = "third_party_id")
-    private Long thirdPartyId;
+    @JoinColumn(name = "state_id", nullable = false)
+    private StateEntity state;
 
-    @ManyToOne
-    @JoinColumn(name = "third_party_vehicle_id")
-    private Long thirdPartyVehicleId;
+    //    @ManyToOne
+    @Column(name = "third_party_id")
+    private Long thirdParty;
+    //    @ManyToOne
+    @Column(name = "third_party_vehicle_id")
+    private Long thirdPartyVehicle;
 
     private String placeEvent;
     private String description;
+
     private LocalDateTime accidentDate;
     private LocalDateTime dateOfRegistration;
     private LocalDateTime dateOfLastUpdate;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id", nullable = false)
-    private StateEntity state;
 }
