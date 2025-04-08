@@ -20,16 +20,13 @@ public class PolicyService {
     private final ThirdUsersApi thirdUsersApi;
 
     public void save(Policy policy) {
-        var auxUser = usersApi.findById(String.valueOf(policy.getUserId()));
-        var auxVehicle = vehiclesApi.getVehicleById(String.valueOf(policy.getVehicleId()));
-        var auxBeneficiary = thirdUsersApi.findThirdUserById(String.valueOf(policy.getBeneficiaryId()));
-        if(auxUser == null || auxUser.getId() == null){
+        if (usersApi.findById(policy.getUserId()) == null) {
             throw new RuntimeException("User not found");
         }
-        if(auxVehicle == null || auxVehicle.getId() == null){
+        if (vehiclesApi.getVehicleById(policy.getVehicleId()) == null) {
             throw new RuntimeException("Vehicle not found");
         }
-        if(auxBeneficiary == null || auxBeneficiary.getId() == null){
+        if (thirdUsersApi.findThirdUserById(policy.getBeneficiaryId()) == null) {
             throw new RuntimeException("Beneficiary not found");
         }
         policyRepository.save(policy);

@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>insurance-policies</name>
-	<description> MSVC - POLICIES / PARTES </description>
+	<description> MSVC - POLICIES / PARTS </description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -63,7 +63,6 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>0.2.6</version>
 		</dependency>
-
 <!-- Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,7 +75,6 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-
 <!-- MapStruct : https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -89,8 +87,6 @@
 			<version>1.5.3.Final</version>
 			<scope>provided</scope>
 		</dependency>
-
-
 	<!-- Swagger Annotations -->
 		<dependency>
 			<groupId>io.swagger</groupId>
@@ -114,7 +110,18 @@
 			<artifactId>jsr305</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-
+<!-- Testing -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>5.14.1</version>
+		</dependency>
+<!-- Spring Boot Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -168,7 +175,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -195,7 +201,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -208,7 +213,30 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.2</version>
+				<configuration>
+					<skipTests>false</skipTests>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/Test*.java</include>
+						<include>**/*Tests.java</include>
+						<include>**/*TestCase.java</include>
+					</includes>
+					<argLine>
+						-javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+						-XX:+EnableDynamicAgentLoading
+					</argLine>
+					<properties>
+						<property>
+							<name>junit.platform.version</name>
+							<value>5.9.3</value>
+						</property>
+					</properties>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

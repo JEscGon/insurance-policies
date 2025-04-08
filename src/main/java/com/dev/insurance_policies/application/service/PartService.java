@@ -25,23 +25,17 @@ public class PartService {
 
     public void save(Part part) {
         // Validar que la póliza existe
-        var policy = policyRepository.findById(part.getPolicyId())
+        policyRepository.findById(part.getPolicyId())
                 .orElseThrow(() -> new RuntimeException("Policy not found"));
-
         // Validar third party vehicle si está presente
-        if (part.getThirdPartyVehicleId() != null) {
-            var auxThirdVehicle = thirdVehiclesApi.getThirdVehicleById(String.valueOf(part.getThirdPartyVehicleId()));
-            if (auxThirdVehicle == null || auxThirdVehicle.getId() == null) {
-                throw new RuntimeException("Third party vehicle not found");
-            }
+        if (part.getThirdPartyVehicleId() != null &&
+            thirdVehiclesApi.getThirdVehicleById(part.getThirdPartyVehicleId()) == null) {
+            throw new RuntimeException("Third party vehicle not found");
         }
-
         // Validar third party user si está presente
-        if (part.getThirdPartyId() != null) {
-            var auxThirdUser = thirdUsersApi.findThirdUserById(String.valueOf(part.getThirdPartyId()));
-            if (auxThirdUser == null || auxThirdUser.getId() == null) {
-                throw new RuntimeException("Third party user not found");
-            }
+        if (part.getThirdPartyId() != null &&
+            thirdUsersApi.findThirdUserById(part.getThirdPartyId()) == null) {
+            throw new RuntimeException("Third party user not found");
         }
         partRepository.save(part);
     }
