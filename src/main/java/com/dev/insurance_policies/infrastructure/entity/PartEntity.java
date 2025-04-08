@@ -4,6 +4,8 @@ package com.dev.insurance_policies.infrastructure.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +38,10 @@ public class PartEntity {
     private String description;
 
     private LocalDateTime accidentDate;
+
+    @CreatedDate
     private LocalDateTime dateOfRegistration;
+    @LastModifiedDate
     private LocalDateTime dateOfLastUpdate;
 
 

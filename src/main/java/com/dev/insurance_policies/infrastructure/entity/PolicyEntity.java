@@ -3,6 +3,8 @@ package com.dev.insurance_policies.infrastructure.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,9 +36,11 @@ public class PolicyEntity {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "registration_date")
+    @CreatedDate
+    @Column(name = "registration_date", nullable = false)
     private LocalDate registrationDate;
 
+    @LastModifiedDate
     @Column(name = "last_update_date")
     private LocalDate lastUpdateDate;
 
