@@ -39,4 +39,5 @@ public class PartEntity {
     private LocalDateTime dateOfRegistration;
     private LocalDateTime dateOfLastUpdate;
 
+
 }
