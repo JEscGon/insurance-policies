@@ -1,8 +1,8 @@
 package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
-import com.dev.insurance_policies.infrastructure.entity.PartEntity;
-import com.dev.insurance_policies.infrastructure.entity.PolicyEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PartMapper;
 import org.junit.jupiter.api.BeforeEach;

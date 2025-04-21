@@ -1,4 +1,4 @@
-package com.dev.insurance_policies.infrastructure.entity;
+package com.dev.insurance_policies.infrastructure.repository.jpa.entity;
 
 
 import jakarta.persistence.*;

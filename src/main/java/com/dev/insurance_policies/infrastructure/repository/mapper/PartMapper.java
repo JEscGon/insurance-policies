@@ -1,7 +1,7 @@
 package com.dev.insurance_policies.infrastructure.repository.mapper;
 
 import com.dev.insurance_policies.application.domain.Part;
-import com.dev.insurance_policies.infrastructure.entity.PartEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

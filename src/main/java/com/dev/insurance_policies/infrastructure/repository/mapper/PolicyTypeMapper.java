@@ -1,7 +1,7 @@
 package com.dev.insurance_policies.infrastructure.repository.mapper;
 
 import com.dev.insurance_policies.application.domain.PolicyType;
-import com.dev.insurance_policies.infrastructure.entity.PolicyTypeEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyTypeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 

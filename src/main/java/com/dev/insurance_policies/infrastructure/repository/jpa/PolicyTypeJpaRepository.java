@@ -1,6 +1,6 @@
 package com.dev.insurance_policies.infrastructure.repository.jpa;
 
-import com.dev.insurance_policies.infrastructure.entity.PolicyTypeEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

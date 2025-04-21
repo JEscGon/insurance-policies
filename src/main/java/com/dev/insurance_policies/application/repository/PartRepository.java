@@ -12,5 +12,5 @@ public interface PartRepository {
     public void deleteById(Long id);
     public List<Part> findAll();
     public List<Part> findAllByPolicyId(String policyId);
-
+    boolean existsById(Long id);
 }

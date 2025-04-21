@@ -56,4 +56,8 @@ public class PartService {
         return partRepository.findAllByPolicyId(policyId);
     }
 
+    public boolean existsById(Long id) {
+        return partRepository.existsById(id);
+    }
+
 }

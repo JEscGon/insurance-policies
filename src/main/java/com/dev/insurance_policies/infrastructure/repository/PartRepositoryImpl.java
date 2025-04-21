@@ -2,7 +2,7 @@ package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.repository.PartRepository;
-import com.dev.insurance_policies.infrastructure.entity.PartEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PartMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class PartRepositoryImpl implements PartRepository {
     private final PartMapper partMapper;
     private final PartJpaRepository partJpaRepository;
 
-    //TODO : FIX
+    //TODO : FIX ID PROBLEM
     @Override
     public void save(Part part) {
         var partEntity = partMapper.fromDomainToEntity(part);
@@ -61,6 +61,11 @@ public class PartRepositoryImpl implements PartRepository {
         return partJpaRepository.findAllByPolicyId(Long.valueOf(policyId)).stream()
                 .map(partMapper::fromEntityToDomain)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return partJpaRepository.existsById(id);
     }
 
 

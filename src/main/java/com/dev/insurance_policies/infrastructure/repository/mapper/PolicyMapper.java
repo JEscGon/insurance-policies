@@ -1,12 +1,10 @@
 package com.dev.insurance_policies.infrastructure.repository.mapper;
 
 import com.dev.insurance_policies.application.domain.Policy;
-import com.dev.insurance_policies.infrastructure.entity.PolicyEntity;
-import jakarta.persistence.Id;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring")
 public interface PolicyMapper {

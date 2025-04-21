@@ -1,7 +1,7 @@
 package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Policy;
-import com.dev.insurance_policies.infrastructure.entity.PolicyEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyTypeJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PolicyMapper;

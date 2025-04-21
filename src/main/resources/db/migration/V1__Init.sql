@@ -1,5 +1,4 @@
--- Establecer el esquema
-SET search_path TO public;
+-- SET search_path TO public;
 
 -- Crear tabla PolicyType
 CREATE TABLE policy_type (

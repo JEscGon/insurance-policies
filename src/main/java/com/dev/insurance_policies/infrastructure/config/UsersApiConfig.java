@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class UsersApiConfig {
-
     @Bean
     public UsersApi usersApi(RestTemplateBuilder restTemplateBuilder) {
         RestTemplate restTemplate = restTemplateBuilder.build();

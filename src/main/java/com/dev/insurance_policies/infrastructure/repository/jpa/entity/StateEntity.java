@@ -1,4 +1,4 @@
-package com.dev.insurance_policies.infrastructure.entity;
+package com.dev.insurance_policies.infrastructure.repository.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "policy_type")
-public class PolicyTypeEntity {
+@Table(name = "state")
+public class StateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
