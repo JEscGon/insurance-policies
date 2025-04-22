@@ -4,7 +4,7 @@ import com.dev.insurance_policies.application.domain.Policy;
 import com.dev.insurance_policies.application.service.PolicyService;
 import com.dev.insurance_policies.generated.controller.api.PoliciesApi;
 import com.dev.insurance_policies.generated.controller.model.PolicyDto;
-import com.dev.insurance_policies.infrastructure.rest.controller.mapper.PolicyDtoMapper;
+import com.dev.insurance_policies.infrastructure.rest.mapper.PolicyDtoMapper;
 import com.dev.insurance_users.generated.client.api.UsersApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

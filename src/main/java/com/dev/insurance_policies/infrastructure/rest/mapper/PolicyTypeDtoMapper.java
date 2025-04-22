@@ -1,4 +1,4 @@
-package com.dev.insurance_policies.infrastructure.rest.controller.mapper;
+package com.dev.insurance_policies.infrastructure.rest.mapper;
 
 import com.dev.insurance_policies.application.domain.PolicyType;
 import com.dev.insurance_policies.generated.controller.model.PolicyTypeDto;

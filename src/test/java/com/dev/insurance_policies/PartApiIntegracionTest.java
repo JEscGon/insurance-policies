@@ -68,15 +68,15 @@ public class PartApiIntegracionTest {
     @Test // TODO: fix
     public void savePartTest() throws Exception {
         String newPart = """
-                {
-                    "policyId": 1,
-                    "stateId": 2,
-                    "thirdPartyId": 3,
-                    "thirdPartyVehicleId": 4,
-                    "placeEvent": "Lugar del accidente",
-                    "description": "Parte de prueba",
-                    "accidentDate": "2023-10-01T10:00:00"
-                }
+            {
+                "policyId": 1,
+                "stateId": 1,
+                "thirdPartyId": 1,
+                "thirdPartyVehicleId": 1,
+                "placeEvent": "Lugar 1",
+                "description": "Descripción 1",
+                "accidentDate": "2023-01-01 10:00:00"
+            }
                 """;
         mockMvc.perform(post("/parts")
                         .contentType("application/json")
@@ -137,13 +137,6 @@ public class PartApiIntegracionTest {
                         .content(updatedPart))
                 .andExpect(status().isOk());
     }
-
-
-
-
-
-
-
 
 }
 

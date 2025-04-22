@@ -3,7 +3,7 @@ package com.dev.insurance_policies.infrastructure.rest.controller;
 import com.dev.insurance_policies.application.service.PartService;
 import com.dev.insurance_policies.generated.controller.api.PartsApi;
 import com.dev.insurance_policies.generated.controller.model.PartDto;
-import com.dev.insurance_policies.infrastructure.rest.controller.mapper.PartDtoMapper;
+import com.dev.insurance_policies.infrastructure.rest.mapper.PartDtoMapper;
 
 
 import lombok.RequiredArgsConstructor;

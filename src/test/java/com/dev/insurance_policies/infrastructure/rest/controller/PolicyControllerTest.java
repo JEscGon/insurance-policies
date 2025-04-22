@@ -3,7 +3,7 @@ package com.dev.insurance_policies.infrastructure.rest.controller;
 import com.dev.insurance_policies.application.domain.Policy;
 import com.dev.insurance_policies.application.service.PolicyService;
 import com.dev.insurance_policies.generated.controller.model.PolicyDto;
-import com.dev.insurance_policies.infrastructure.rest.controller.mapper.PolicyDtoMapper;
+import com.dev.insurance_policies.infrastructure.rest.mapper.PolicyDtoMapper;
 import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

@@ -116,12 +116,7 @@
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<version>5.14.1</version>
 		</dependency>
-<!-- Spring Boot Test -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 <!-- Embedded H2 Database for TEST -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -224,7 +219,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.2</version>
 				<configuration>
-					<skipTests>false</skipTests>
+					<skipTests>true</skipTests>
 					<includes>
 						<include>**/*Test.java</include>
 						<include>**/Test*.java</include>

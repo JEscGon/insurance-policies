@@ -4,7 +4,7 @@ package com.dev.insurance_policies.infrastructure.rest.controller;
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.service.PartService;
 import com.dev.insurance_policies.generated.controller.model.PartDto;
-import com.dev.insurance_policies.infrastructure.rest.controller.mapper.PartDtoMapper;
+import com.dev.insurance_policies.infrastructure.rest.mapper.PartDtoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;

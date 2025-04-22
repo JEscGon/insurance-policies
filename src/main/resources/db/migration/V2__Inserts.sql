@@ -43,3 +43,4 @@ INSERT INTO parts (policy_id, third_party_id, third_party_vehicle_id, place_even
 (18, 18, 18, 'Lugar 18', 'Descripción 18', '2023-06-15 10:00:00', '2023-06-15 12:00:00', NULL, 2),
 (19, 19, 19, 'Lugar 19', 'Descripción 19', '2023-07-15 10:00:00', '2023-07-15 12:00:00', NULL, 3),
 (20, 20, 20, 'Lugar 20', 'Descripción 20', '2023-08-15 10:00:00', '2023-08-15 12:00:00', NULL, 4);
+
