@@ -2,6 +2,10 @@ package com.dev.insurance_policies.application.service;
 import com.dev.insurance_policies.application.domain.Policy;
 import com.dev.insurance_policies.application.repository.PolicyRepository;
 
+import com.dev.insurance_policies.application.repository.UserRepository;
+import com.dev.insurance_policies.application.repository.UserThirdRepository;
+import com.dev.insurance_policies.application.repository.VehicleRepository;
+import com.dev.insurance_policies.infrastructure.repository.UserRepositoryRestClientImpl;
 import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
 import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.dev.insurance_users.generated.client.api.VehiclesApi;
@@ -17,18 +21,18 @@ import java.util.Optional;
 public class PolicyService {
 
     private final PolicyRepository policyRepository;
-    private final UsersApi usersApi;
-    private final VehiclesApi vehiclesApi;
-    private final ThirdUsersApi thirdUsersApi;
+    private final UserRepository userRepository;
+    private final VehicleRepository vehicleRepository;
+    private final UserThirdRepository userThirdRepository;
 
     public void save(Policy policy) {
-        if (usersApi.findById(policy.getUserId()) == null) {
+        if (userRepository.findById(policy.getUserId()) == null) {
             throw new RuntimeException("User not found");
         }
-        if (vehiclesApi.getVehicleById(policy.getVehicleId()) == null) {
+        if (vehicleRepository.findById(policy.getVehicleId()) == null) {
             throw new RuntimeException("Vehicle not found");
         }
-        if (thirdUsersApi.findThirdUserById(policy.getBeneficiaryId()) == null) {
+        if (userThirdRepository.findThirdUserById(policy.getBeneficiaryId()) == null) {
             throw new RuntimeException("Beneficiary not found");
         }
         policyRepository.save(policy);
@@ -47,7 +51,7 @@ public class PolicyService {
     }
 
     public Optional<Policy> findByMatricula(String matricula) {
-        var auxVehicle = vehiclesApi.findByMatricula(matricula);
+        var auxVehicle = vehicleRepository.findByMatricula(matricula);
         if (auxVehicle == null || auxVehicle.getId() == null) {
             throw new RuntimeException("Vehicle not found");
         }
@@ -55,7 +59,7 @@ public class PolicyService {
     }
 
     public Optional<Policy> findByDni(String dni) {
-        var auxUser = usersApi.getUserByDni(dni);
+        var auxUser = userRepository.getUserByDni(dni);
         return policyRepository.findByUserId(Long.valueOf(auxUser.getId()));
     }
 
