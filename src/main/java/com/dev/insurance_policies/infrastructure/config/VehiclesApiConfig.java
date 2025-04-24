@@ -12,8 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class VehiclesApiConfig {
 
     @Bean
-    public VehiclesApi vehiclesApi(RestTemplateBuilder restTemplateBuilder) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+    public VehiclesApi vehiclesApi(RestTemplate restTemplate) {
         ApiClient apiClient = new ApiClient(restTemplate);
         apiClient.setBasePath("http://localhost:8080");
         return new VehiclesApi(apiClient);

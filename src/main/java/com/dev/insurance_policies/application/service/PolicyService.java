@@ -7,6 +7,8 @@ import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -54,9 +56,6 @@ public class PolicyService {
 
     public Optional<Policy> findByDni(String dni) {
         var auxUser = usersApi.getUserByDni(dni);
-        if(auxUser == null || auxUser.getId() == null){
-            throw new RuntimeException("User not found");
-        }
         return policyRepository.findByUserId(Long.valueOf(auxUser.getId()));
     }
 

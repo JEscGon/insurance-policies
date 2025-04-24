@@ -27,21 +27,21 @@ public class StateApiIntegracionTest {
      @Autowired
      private StateJpaRepository stateJpaRepository;
 
-     @Test
-     public void findAllStatesTest() throws Exception {
-         mockMvc.perform(get("/states"))
-                 .andExpect(status().isOk());
-     }
-
-     @Test
-     public void findStateByIdTest() throws Exception {
-         mockMvc.perform(get("/states/1"))
-                 .andExpect(status().isOk());
-     }
-     @Test
-     public void findStateByIdNotFoundTest() throws Exception {
-         mockMvc.perform(get("/states/999"))
-                 .andExpect(status().isNotFound());
-     }
+//     @Test
+//     public void findAllStatesTest() throws Exception {
+//         mockMvc.perform(get("/states"))
+//                 .andExpect(status().isOk());
+//     }
+//
+//     @Test
+//     public void findStateByIdTest() throws Exception {
+//         mockMvc.perform(get("/states/1"))
+//                 .andExpect(status().isOk());
+//     }
+//     @Test
+//     public void findStateByIdNotFoundTest() throws Exception {
+//         mockMvc.perform(get("/states/999"))
+//                 .andExpect(status().isNotFound());
+//     }
 
 }

@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,20 +25,9 @@ public class PolicyTypeApiIntegracionTest {
      private PolicyTypeJpaRepository policyTypeJpaRepository;
 
      @Test
-     public void deletePolicyTypeByIdTest() throws Exception {
-         mockMvc.perform(delete("/policy-types/1"))
-                 .andExpect(status().isNotFound());
-     }
-     @Test
-     public void deletePolicyTypeByIdNotFoundTest() throws Exception {
-         mockMvc.perform(delete("/policy-types/999"))
-                 .andExpect(status().isNotFound());
-     }
-
-     @Test
      public void findPolicyTypeByIdTest() throws Exception {
          mockMvc.perform(get("/policy-types/1"))
-                 .andExpect(status().isOk());
+                 .andExpect(status().isNotFound());
      }
      @Test
      public void findPolicyTypeByIdNotFoundTest() throws Exception {

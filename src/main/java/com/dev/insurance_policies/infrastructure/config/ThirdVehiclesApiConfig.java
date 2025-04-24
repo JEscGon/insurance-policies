@@ -11,8 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ThirdVehiclesApiConfig {
     @Bean
-    public ThirdVehiclesApi thirdVehiclesApi(RestTemplateBuilder restTemplateBuilder) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+    public ThirdVehiclesApi thirdVehiclesApi(RestTemplate restTemplate) {;
         ApiClient apiClient = new ApiClient(restTemplate);
         apiClient.setBasePath("http://localhost:8080");
         return new ThirdVehiclesApi(apiClient);

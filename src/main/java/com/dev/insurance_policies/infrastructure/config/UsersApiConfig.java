@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class UsersApiConfig {
     @Bean
-    public UsersApi usersApi(RestTemplateBuilder restTemplateBuilder) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+    public UsersApi usersApi(RestTemplate restTemplate) {
         ApiClient apiClient = new ApiClient(restTemplate);
         apiClient.setBasePath("http://localhost:8080");
         return new UsersApi(apiClient);
