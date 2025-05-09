@@ -40,10 +40,8 @@ public class PolicyApiIntegracionTest {
     private MockMvc mockMvc;
     @Autowired
     private PolicyJpaRepository policyJpaRepository;
-
     @Autowired
     private RestTemplate restTemplate;
-
     @MockitoBean
     private UsersApi apiClient;
 

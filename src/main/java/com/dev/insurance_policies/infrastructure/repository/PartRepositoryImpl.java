@@ -2,8 +2,10 @@ package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.repository.PartRepository;
+import com.dev.insurance_policies.infrastructure.repository.jpa.StateJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.StateEntity;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,7 @@ public class PartRepositoryImpl implements PartRepository {
 
     private final PartMapper partMapper;
     private final PartJpaRepository partJpaRepository;
+    private final StateJpaRepository stateJpaRepository;
 
     @Override     //TODO : FIX ID PROBLEM
     public void save(Part part) {
@@ -29,11 +32,15 @@ public class PartRepositoryImpl implements PartRepository {
             Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
             if(partEntityOptional.isPresent()){
                 var existingPart = partEntityOptional.get();
+                existingPart.setThirdPartyId(part.getThirdPartyId());
+                existingPart.setThirdPartyVehicleId(part.getThirdPartyVehicleId());
                 partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
                 partEntity.setDateOfLastUpdate(LocalDateTime.now());
                 partMapper.updatePartFromExisting(existingPart, partEntity);
             }
         }
+        partEntity.setState(stateJpaRepository.findById(1L)
+                .orElseThrow(() -> new IllegalArgumentException("State not found")));
         partJpaRepository.save(partEntity);
     }
 

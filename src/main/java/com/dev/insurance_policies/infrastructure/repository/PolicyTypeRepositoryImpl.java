@@ -36,4 +36,6 @@ public class PolicyTypeRepositoryImpl implements PolicyTypeRepository {
     public void deleteById(Long id) {
 
     }
+
+
 }

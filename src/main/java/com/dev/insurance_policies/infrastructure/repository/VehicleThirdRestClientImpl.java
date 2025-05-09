@@ -4,6 +4,7 @@ import com.dev.insurance_policies.application.domain.VehicleThird;
 import com.dev.insurance_policies.application.repository.VehicleThirdRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.VehicleThirdDtoClientMapper;
 import com.dev.insurance_users.generated.client.api.ThirdVehiclesApi;
+import com.dev.insurance_users.generated.client.model.ThirdPartyVehiclesWrapperClientDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +27,7 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     }
     @Override
     public List<VehicleThird> getAllThirdVehicles() {
-        return thirdVehiclesApi.getAllThirdVehicles().stream()
+        return thirdVehiclesApi.getAllThirdVehicles().getVehicles().stream()
                 .map(vehicleThirdDtoClientMapper::fromDtoToDomain)
                 .toList();
     }
@@ -34,9 +35,12 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     public VehicleThird getThirdVehicleById(Long id) {
         return vehicleThirdDtoClientMapper.fromDtoToDomain(thirdVehiclesApi.getThirdVehicleById(id));
     }
+
     @Override
     public void saveThirdVehicle(VehicleThird vehicleThird) {
-        thirdVehiclesApi.saveThirdVehicle(vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));
+        var vehicleWrapper = new ThirdPartyVehiclesWrapperClientDto();
+        vehicleWrapper.addVehiclesItem(vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));
+        thirdVehiclesApi.saveThirdVehicle(vehicleWrapper);
     }
     @Override
     public void updateThirdVehicle(Long id, VehicleThird vehicleThird) {

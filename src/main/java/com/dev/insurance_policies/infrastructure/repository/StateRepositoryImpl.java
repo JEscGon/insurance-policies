@@ -17,9 +17,6 @@ public class StateRepositoryImpl implements StateRepository {
     private final StateMapper stateMapper;
     private final StateJpaRepository stateJpaRepository;
 
-    @Override
-    public void save(State state) {
-    }
 
     @Override
     public Optional<State> findById(Long id) {

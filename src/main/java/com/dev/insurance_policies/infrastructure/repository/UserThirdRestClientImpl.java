@@ -4,6 +4,7 @@ import com.dev.insurance_policies.application.domain.UserThird;
 import com.dev.insurance_policies.application.repository.UserThirdRepository;
 import com.dev.insurance_policies.infrastructure.repository.mapper.UserThirdDtoClientMapper;
 import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
+import com.dev.insurance_users.generated.client.model.ThirdPartyUserWrapperClientDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +23,9 @@ public class UserThirdRestClientImpl implements UserThirdRepository {
     }
     @Override
     public List<UserThird> findAllThirdUsers() {
-        return thirdUsersApi.findAllThirdUsers().stream()
-                .map(userThirdDtoClientMapper::fromDtoToDomain)
-                .toList();
+        return thirdUsersApi.findAllThirdUsers().getUsers().stream()
+            .map(userThirdDtoClientMapper::fromDtoToDomain)
+            .toList();
     }
     @Override
     public UserThird findThirdUserById(Long id) {
@@ -32,7 +33,7 @@ public class UserThirdRestClientImpl implements UserThirdRepository {
     }
     @Override
     public void saveThirdUser(UserThird userThird) {
-        thirdUsersApi.saveThirdUser(userThirdDtoClientMapper.fromDomainToDto(userThird));
+        thirdUsersApi.saveThirdUser(new ThirdPartyUserWrapperClientDto().addUsersItem(userThirdDtoClientMapper.fromDomainToDto(userThird)));
     }
     @Override
     public void updateThirdUser(Long id, UserThird userThird) {

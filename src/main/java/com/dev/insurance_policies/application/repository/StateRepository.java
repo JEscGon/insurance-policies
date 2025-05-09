@@ -7,8 +7,7 @@ import java.util.Optional;
 
 public interface StateRepository {
 
-    public void save(State state);
-    public Optional<State> findById(Long id);
-    public void deleteById(Long id);
-    public List<State> findAll();
+    Optional<State> findById(Long id);
+    void deleteById(Long id);
+    List<State> findAll();
 }

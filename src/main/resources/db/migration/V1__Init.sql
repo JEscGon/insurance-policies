@@ -42,12 +42,11 @@ CREATE TABLE policies (
     premium_amount BIGINT NOT NULL
 );
 
--- Crear tabla Part
 CREATE TABLE parts (
     id SERIAL PRIMARY KEY,
     policy_id BIGINT NOT NULL REFERENCES policies(id),
-    third_party_id BIGINT NOT NULL,
-    third_party_vehicle_id BIGINT NOT NULL,
+    third_party_id BIGINT[] NOT NULL,
+    third_party_vehicle_id BIGINT[] NOT NULL,
     place_event VARCHAR(255) NOT NULL,
     description TEXT,
     accident_date TIMESTAMP NOT NULL,
