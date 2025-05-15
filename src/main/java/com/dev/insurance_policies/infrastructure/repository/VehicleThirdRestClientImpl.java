@@ -37,11 +37,14 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
     }
 
     @Override
-    public void saveThirdVehicle(VehicleThird vehicleThird) {
+    public List<Integer> saveThirdVehicle(List<VehicleThird> vehiclesThird) {
         var vehicleWrapper = new ThirdPartyVehiclesWrapperClientDto();
-        vehicleWrapper.addVehiclesItem(vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));
-        thirdVehiclesApi.saveThirdVehicle(vehicleWrapper);
+        vehiclesThird.stream()
+                .map(vehicleThirdDtoClientMapper::fromDomainToDto)
+                .forEach(vehicleWrapper::addVehiclesItem);
+        return thirdVehiclesApi.saveThirdVehicle(vehicleWrapper);
     }
+
     @Override
     public void updateThirdVehicle(Long id, VehicleThird vehicleThird) {
         thirdVehiclesApi.updateThirdVehicle(id, vehicleThirdDtoClientMapper.fromDomainToDto(vehicleThird));

@@ -9,6 +9,8 @@ import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,20 +26,6 @@ public class PartService {
     private final VehiclesApi vehiclesApi;
 
     public void save(Part part) {
-        policyRepository.findById(part.getPolicyId())
-                .orElseThrow(() -> new RuntimeException("Policy not found"));
-
-        for (Long vehicleId : part.getThirdPartyVehicleId()) {
-            if (thirdVehiclesApi.getThirdVehicleById(vehicleId) == null) {
-                throw new RuntimeException("Third party vehicle not found");
-            }
-        }
-        for (Long userId : part.getThirdPartyId()) {
-            if (thirdUsersApi.findThirdUserById(userId) == null) {
-                throw new RuntimeException("Third party user not found");
-            }
-        }
-
         partRepository.save(part);
     }
 

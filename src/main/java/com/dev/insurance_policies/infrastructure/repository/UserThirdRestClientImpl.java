@@ -31,10 +31,16 @@ public class UserThirdRestClientImpl implements UserThirdRepository {
     public UserThird findThirdUserById(Long id) {
         return userThirdDtoClientMapper.fromDtoToDomain(thirdUsersApi.findThirdUserById(id));
     }
+
     @Override
-    public void saveThirdUser(UserThird userThird) {
-        thirdUsersApi.saveThirdUser(new ThirdPartyUserWrapperClientDto().addUsersItem(userThirdDtoClientMapper.fromDomainToDto(userThird)));
+    public List<Integer> saveThirdUser(List<UserThird> usersThird) {
+        var userWrapper = new ThirdPartyUserWrapperClientDto();
+        usersThird.stream()
+                .map(userThirdDtoClientMapper::fromDomainToDto)
+                .forEach(userWrapper::addUsersItem);
+        return thirdUsersApi.saveThirdUser(userWrapper);
     }
+
     @Override
     public void updateThirdUser(Long id, UserThird userThird) {
         thirdUsersApi.updateThirdUser(id, userThirdDtoClientMapper.fromDomainToDto(userThird));

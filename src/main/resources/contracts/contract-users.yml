@@ -359,7 +359,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyUserWrapper'
+                type: array
+                items:
+                  type: integer
 
     get:
       tags:
@@ -479,8 +481,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
-
+                type: array
+                items:
+                  type: integer
     get:
       tags:
         - third_vehicles
@@ -684,18 +687,6 @@ components:
         - marca
         - fechaFabricacion
 
-    ThirdPartyInfo:
-      type: object
-      properties:
-        thirdPartyUser:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyUser'
-        thirdPartyVehicle:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
-
     ThirdPartyUserWrapper:
       type: object
       properties:
@@ -787,7 +778,6 @@ components:
         - km
         - marca
         - fechaFabricacion
-
 
     ErrorMessage:
       type: object

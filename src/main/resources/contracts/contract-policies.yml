@@ -439,9 +439,16 @@ components:
           type: integer
         policyId:
           type: integer
-        thirdPartyInfo:
-          type: object
-          $ref: '#/components/schemas/ThirdPartyInfo'
+        thirdPartyId:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de terceros involucrados
+        thirdPartyVehicleId:
+          type: array
+          items:
+            type: integer
+          description: Lista de IDs de vehículos de terceros involucrados
         placeEvent:
           type: string
         description:
@@ -463,18 +470,6 @@ components:
         - accidentDate
         - dateOfRegistration
         - stateId
-
-    ThirdPartyInfo:
-      type: object
-      properties:
-        thirdPartyUser:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyUser'
-        thirdPartyVehicle:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyUser:
       type: object
