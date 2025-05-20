@@ -18,6 +18,7 @@ public class PolicyService {
     private final VehicleRepository vehicleRepository;
     private final UserThirdRepository userThirdRepository;
 
+    //TODO: excepciones personalizadas 404 mas generica ResourceNotFoundException
     public void save(Policy policy) {
         if (userRepository.findById(policy.getUserId()) == null) {
             throw new RuntimeException("User not found");

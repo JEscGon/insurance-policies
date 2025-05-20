@@ -38,25 +38,29 @@ public class PartRepositoryImpl implements PartRepository {
     @Override
     @Transactional
     public void save(Part part) {
+
         var partEntity = partMapper.fromDomainToEntity(part);
-        if (part.getId() == null) {
+
+        if (part.getId() == null) { // CREAR
             partEntity.setDateOfRegistration(LocalDateTime.now());
-        } else {
+
+            partEntity.setState(stateJpaRepository.findById(1L)
+                    //TODO: excepcion personalizada ResorceNotFoundException
+                    .orElseThrow(() -> new IllegalArgumentException("State not found")));
+
+        } else { // ACTUALIZAR
             Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
             if (partEntityOptional.isPresent()) {
                 var existingPart = partEntityOptional.get();
                 partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
                 partEntity.setDateOfLastUpdate(LocalDateTime.now());
+                //TODO: excepcion personalizada ResorceNotFoundException
+                partEntity.setState(stateJpaRepository.findById(existingPart.getState().getId()).orElseThrow(() -> new IllegalArgumentException("State not found")));
                 partMapper.updatePartFromExisting(existingPart, partEntity);
             }
         }
-        // Guardar estado
-        partEntity.setState(stateJpaRepository.findById(1L)
-                .orElseThrow(() -> new IllegalArgumentException("State not found")));
 
-        // Guardar entidad principal
         partJpaRepository.save(partEntity);
-
 
         part.getThirdPartyIds().forEach(thirdPartyId -> {
             var thirdPartyEntity = new PartThirdPartyEntity();
@@ -65,15 +69,12 @@ public class PartRepositoryImpl implements PartRepository {
             partThirdPartyJpaRepository.save(thirdPartyEntity);
         });
 
-
         part.getThirdPartyVehicleIds().forEach(thirdPartyVehicleId -> {
             var thirdPartyVehicleEntity = new PartThirdPartyVehicleEntity();
             thirdPartyVehicleEntity.setPart(partEntity);
             thirdPartyVehicleEntity.setThirdPartyVehicleId(thirdPartyVehicleId);
             partThirdPartyVehicleJpaRepository.save(thirdPartyVehicleEntity);
         });
-
-        partJpaRepository.save(partEntity);
     }
 
     @Override

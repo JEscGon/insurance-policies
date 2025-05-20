@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class PolicyApiIntegracionTest {
+class PolicyApiIntegracionTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,29 +36,29 @@ public class PolicyApiIntegracionTest {
     private UsersApi apiClient;
 
     @Test
-    public void deletePolicyByIdTest() throws Exception {
+    void deletePolicyByIdTest() throws Exception {
         mockMvc.perform(get("/policies/2"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void deletePolicyByNonExistentIdTest() throws Exception {
+    void deletePolicyByNonExistentIdTest() throws Exception {
         mockMvc.perform(get("/policies/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void findAllPoliciesTest() throws Exception {
+    void findAllPoliciesTest() throws Exception {
         mockMvc.perform(get("/policies"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void findPolicyBuDniTest() throws Exception {
+    void findPolicyBuDniTest() throws Exception {
         mockMvc.perform(get("/policies/dni/12345678A"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void findPolicyByNonExistentDniTest() throws Exception {
+    void findPolicyByNonExistentDniTest() throws Exception {
          when(apiClient.getUserByDni("87654321B"))
                 .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
@@ -67,40 +67,40 @@ public class PolicyApiIntegracionTest {
     }
 
     @Test
-    public void findPolicyByIdTest() throws Exception {
+    void findPolicyByIdTest() throws Exception {
         mockMvc.perform(get("/policies/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void findPolicyByNonExistentIdTest() throws Exception {
+    void findPolicyByNonExistentIdTest() throws Exception {
         mockMvc.perform(get("/policies/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void findPolicyByMatriculaTest() throws Exception {
+    void findPolicyByMatriculaTest() throws Exception {
         mockMvc.perform(get("/policies/vehicle/1234ABC"))
                 .andExpect(status().isOk());
     }
     @Test //TODO: ver como comprobar la respuesta ya que llama a otro microservicio
-    public void findPolicyByNonExistentMatriculaTest() throws Exception {
+    void findPolicyByNonExistentMatriculaTest() throws Exception {
         mockMvc.perform(get("/policies/vehicle/9999XYZ"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void findPolicyByUserIdTest() throws Exception {
+    void findPolicyByUserIdTest() throws Exception {
         mockMvc.perform(get("/policies/user/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void findPolicyByNonExistentUserIdTest() throws Exception {
+    void findPolicyByNonExistentUserIdTest() throws Exception {
         mockMvc.perform(get("/policies/user/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void savePolicyTest() throws Exception {
+    void savePolicyTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -121,7 +121,7 @@ public class PolicyApiIntegracionTest {
     }
 
     @Test
-    public void savePolicyWithInvalidDataTest() throws Exception {
+    void savePolicyWithInvalidDataTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -142,7 +142,7 @@ public class PolicyApiIntegracionTest {
     }
 
     @Test //TODO : duplicated key
-    public void saveWithDuplicateKeyTest() throws Exception {
+    void saveWithDuplicateKeyTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -167,7 +167,7 @@ public class PolicyApiIntegracionTest {
     }
 
     @Test // TODO:
-    public void updatePolicyTest() throws Exception {
+    void updatePolicyTest() throws Exception {
         String updatedPolicy = """
                 {
                     "userId": 1,

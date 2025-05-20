@@ -22,6 +22,13 @@ public class PartController implements PartsApi {
         partService.save(partDtoMapper.fromDtoToDomain(partDto));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    //TODO :
+    @Override
+    public ResponseEntity<Void> updatePart(Integer id, PartDto partDto) {
+        partDto.setId(id);
+        partService.save(partDtoMapper.fromDtoToDomain(partDto));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @Override
     public ResponseEntity<List<PartDto>> getAllParts(){

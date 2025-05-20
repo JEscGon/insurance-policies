@@ -1,7 +1,6 @@
 package com.dev.insurance_policies.infrastructure.repository.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

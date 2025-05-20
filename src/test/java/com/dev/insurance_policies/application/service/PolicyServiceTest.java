@@ -6,7 +6,6 @@ import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
 import com.dev.insurance_users.generated.client.api.UsersApi;
 import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import com.dev.insurance_users.generated.client.model.UserClientDto;
-import com.dev.insurance_users.generated.client.model.VehicleClientDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +22,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PolicyServiceTest {
+class PolicyServiceTest {
 
     @Mock
     private PolicyRepository policyRepository;
@@ -39,7 +38,7 @@ public class PolicyServiceTest {
     private Policy policy;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         policy = new Policy();
         policy.setId(1L);
         policy.setUserId(101L);
@@ -48,7 +47,7 @@ public class PolicyServiceTest {
     }
 
     @Test
-    public void testSavePolicyWithNonExistentUser() {
+    void testSavePolicyWithNonExistentUser() {
         // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> policyService.save(policy));
@@ -58,7 +57,7 @@ public class PolicyServiceTest {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         // Arrange
         when(policyRepository.findById(1L)).thenReturn(Optional.of(policy));
 
@@ -70,7 +69,7 @@ public class PolicyServiceTest {
         assertEquals(policy, result.get());
     }
     @Test
-    public void testDeletePolicyById() {
+    void testDeletePolicyById() {
         // Act
         policyService.deletePolicyById(1L);
 
@@ -78,7 +77,7 @@ public class PolicyServiceTest {
         verify(policyRepository).deleteById(1L);
     }
     @Test
-    public void testGetAllPolicies() {
+    void testGetAllPolicies() {
         // Arrange
         List<Policy> policies = Arrays.asList(policy);
         when(policyRepository.findAll()).thenReturn(policies);
@@ -90,7 +89,7 @@ public class PolicyServiceTest {
         assertEquals(policies, result);
     }
     @Test
-    public void testFindByMatriculaWithNonExistentVehicle() {
+    void testFindByMatriculaWithNonExistentVehicle() {
         // Arrange
         when(vehiclesApi.findByMatricula("ABC123")).thenReturn(null);
 
@@ -98,7 +97,7 @@ public class PolicyServiceTest {
         assertThrows(RuntimeException.class, () -> policyService.findByMatricula("ABC123"));
     }
     @Test
-    public void testFindByDniWithNonExistentUser() {
+    void testFindByDniWithNonExistentUser() {
         // Arrange
         when(usersApi.getUserByDni("12345678A")).thenReturn(null);
 
@@ -106,7 +105,7 @@ public class PolicyServiceTest {
         assertThrows(RuntimeException.class, () -> policyService.findByDni("12345678A"));
     }
     @Test
-    public void testFindByUserId() {
+    void testFindByUserId() {
         // Arrange
         when(policyRepository.findByUserId(101L)).thenReturn(Optional.of(policy));
 
@@ -118,7 +117,7 @@ public class PolicyServiceTest {
         assertEquals(policy, result.get());
     }
     @Test
-    public void testSavePolicyWithNonExistentVehicle() {
+    void testSavePolicyWithNonExistentVehicle() {
         when(usersApi.findById(anyLong())).thenReturn(new UserClientDto().id(101));
         when(vehiclesApi.getVehicleById(anyLong())).thenReturn(null);
 
@@ -126,7 +125,7 @@ public class PolicyServiceTest {
         verify(policyRepository, never()).save(any());
     }
 	@Test
-    public void testFindByUserIdWithNonExistentUser() {
+    void testFindByUserIdWithNonExistentUser() {
         // Arrange
         when(policyRepository.findByUserId(999L)).thenReturn(Optional.empty());
 
@@ -137,7 +136,7 @@ public class PolicyServiceTest {
         assertFalse(result.isPresent());
     }
     @Test
-    public void testDeleteNonExistentPolicy() {
+    void testDeleteNonExistentPolicy() {
         // Arrange
         doThrow(new RuntimeException("Policy not found")).when(policyRepository).deleteById(999L);
 
@@ -145,7 +144,7 @@ public class PolicyServiceTest {
         assertThrows(RuntimeException.class, () -> policyService.deletePolicyById(999L));
     }
     @Test
-    public void testFindByDniWithExistingUser() {
+    void testFindByDniWithExistingUser() {
         // Arrange
         String testDni = "12345678A";
         UserClientDto user = new UserClientDto().id(101);
