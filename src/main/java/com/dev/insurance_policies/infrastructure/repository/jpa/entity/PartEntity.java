@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,18 +28,17 @@ public class PartEntity {
     @JoinColumn(name = "state_id", nullable = false)
     private StateEntity state;
 
-    //    @ManyToOne
-    @Column(name = "third_party_id")
-    private Long thirdPartyId;
-    //    @ManyToOne
-    @Column(name = "third_party_vehicle_id")
-    private Long thirdPartyVehicleId;
+    @Transient
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PartThirdPartyEntity> thirdPartyIds;
+    @Transient
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PartThirdPartyVehicleEntity> thirdPartyVehicleIds;
 
     private String placeEvent;
     private String description;
 
     private LocalDateTime accidentDate;
-
     @CreatedDate
     private LocalDateTime dateOfRegistration;
     @LastModifiedDate
