@@ -1,7 +1,6 @@
 package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Policy;
-import com.dev.insurance_policies.application.exception.ResourceNotFoundException;
 import com.dev.insurance_policies.application.repository.PolicyRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyTypeJpaRepository;
@@ -20,7 +19,6 @@ public class PolicyRepositoryImpl implements PolicyRepository {
     private final PolicyMapper policyMapper;
     private final PolicyJpaRepository policyJpaRepository;
     private final PolicyTypeJpaRepository policyTypeJpaRepository;
-    private final VehicleRestClientImpl vehicleRestClient;
 
     @Override
     public void save(Policy policy) {
@@ -60,15 +58,6 @@ public class PolicyRepositoryImpl implements PolicyRepository {
     @Override
     public Optional<Policy> findByUserId(Long userId) {
         return policyJpaRepository.findByUserId(userId)
-                .map(policyMapper::fromEntityToDomain);
-    }
-    @Override
-    public Optional<Policy> findByMatricula(String matricula) {
-        var auxVehicle = vehicleRestClient.findByMatricula(matricula);
-        if (auxVehicle == null || auxVehicle.getId() == null) {
-            throw new ResourceNotFoundException("Vehicle not found");
-        }
-        return policyJpaRepository.findByVehicleId(auxVehicle.getId())
                 .map(policyMapper::fromEntityToDomain);
     }
 

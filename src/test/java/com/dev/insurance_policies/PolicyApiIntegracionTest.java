@@ -1,19 +1,29 @@
 package com.dev.insurance_policies;
 
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyJpaRepository;
+import com.dev.insurance_users.generated.client.ApiClient;
 import com.dev.insurance_users.generated.client.api.UsersApi;
+import org.hibernate.annotations.NotFound;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,41 +34,43 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class PolicyApiIntegracionTest {
+public class PolicyApiIntegracionTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private PolicyJpaRepository policyJpaRepository;
+
     @Autowired
     private RestTemplate restTemplate;
+
     @MockitoBean
     private UsersApi apiClient;
 
     @Test
-    void deletePolicyByIdTest() throws Exception {
+    public void deletePolicyByIdTest() throws Exception {
         mockMvc.perform(get("/policies/2"))
                 .andExpect(status().isOk());
     }
     @Test
-    void deletePolicyByNonExistentIdTest() throws Exception {
+    public void deletePolicyByNonExistentIdTest() throws Exception {
         mockMvc.perform(get("/policies/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void findAllPoliciesTest() throws Exception {
+    public void findAllPoliciesTest() throws Exception {
         mockMvc.perform(get("/policies"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void findPolicyBuDniTest() throws Exception {
+    public void findPolicyBuDniTest() throws Exception {
         mockMvc.perform(get("/policies/dni/12345678A"))
                 .andExpect(status().isOk());
     }
     @Test
-    void findPolicyByNonExistentDniTest() throws Exception {
+    public void findPolicyByNonExistentDniTest() throws Exception {
          when(apiClient.getUserByDni("87654321B"))
                 .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
@@ -67,40 +79,40 @@ class PolicyApiIntegracionTest {
     }
 
     @Test
-    void findPolicyByIdTest() throws Exception {
+    public void findPolicyByIdTest() throws Exception {
         mockMvc.perform(get("/policies/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    void findPolicyByNonExistentIdTest() throws Exception {
+    public void findPolicyByNonExistentIdTest() throws Exception {
         mockMvc.perform(get("/policies/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void findPolicyByMatriculaTest() throws Exception {
+    public void findPolicyByMatriculaTest() throws Exception {
         mockMvc.perform(get("/policies/vehicle/1234ABC"))
                 .andExpect(status().isOk());
     }
     @Test //TODO: ver como comprobar la respuesta ya que llama a otro microservicio
-    void findPolicyByNonExistentMatriculaTest() throws Exception {
+    public void findPolicyByNonExistentMatriculaTest() throws Exception {
         mockMvc.perform(get("/policies/vehicle/9999XYZ"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void findPolicyByUserIdTest() throws Exception {
+    public void findPolicyByUserIdTest() throws Exception {
         mockMvc.perform(get("/policies/user/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    void findPolicyByNonExistentUserIdTest() throws Exception {
+    public void findPolicyByNonExistentUserIdTest() throws Exception {
         mockMvc.perform(get("/policies/user/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void savePolicyTest() throws Exception {
+    public void savePolicyTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -119,9 +131,8 @@ class PolicyApiIntegracionTest {
                         .content(newPolicy))
                 .andExpect(status().isCreated());
     }
-
     @Test
-    void savePolicyWithInvalidDataTest() throws Exception {
+    public void savePolicyWithInvalidDataTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -140,9 +151,8 @@ class PolicyApiIntegracionTest {
                         .content(newPolicy))
                 .andExpect(status().isConflict());
     }
-
     @Test //TODO : duplicated key
-    void saveWithDuplicateKeyTest() throws Exception {
+    public void saveWithDuplicateKeyTest() throws Exception {
         String newPolicy = """
                 {
                     "userId": 1,
@@ -167,7 +177,7 @@ class PolicyApiIntegracionTest {
     }
 
     @Test // TODO:
-    void updatePolicyTest() throws Exception {
+    public void updatePolicyTest() throws Exception {
         String updatedPolicy = """
                 {
                     "userId": 1,

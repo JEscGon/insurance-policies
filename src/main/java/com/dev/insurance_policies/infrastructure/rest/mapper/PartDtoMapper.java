@@ -2,8 +2,6 @@ package com.dev.insurance_policies.infrastructure.rest.mapper;
 
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.generated.controller.model.PartDto;
-import com.dev.insurance_policies.generated.controller.model.ThirdPartyUserDto;
-import com.dev.insurance_policies.generated.controller.model.ThirdPartyVehicleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -12,7 +10,6 @@ import org.mapstruct.Named;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PartDtoMapper {
@@ -38,7 +35,5 @@ public interface PartDtoMapper {
     default LocalDateTime mapToLocalDateTime(OffsetDateTime offsetDateTime) {
         return offsetDateTime != null ? offsetDateTime.toLocalDateTime() : null;
     }
-
-
 }
 

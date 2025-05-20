@@ -8,6 +8,6 @@ public interface UserThirdRepository {
     void deleteThirdUserById(Long userId);
     List<UserThird> findAllThirdUsers();
     UserThird findThirdUserById(Long id);
-    List<Integer> saveThirdUser(List<UserThird> usersThird);
+    void saveThirdUser(UserThird userThird);
     void updateThirdUser(Long id, UserThird userThird);
 }

@@ -9,13 +9,13 @@ servers:
 
 tags:
   - name: users
-    description: Operations sobre users
+    description: Operations about users
   - name: vehicles
-    description: Operations sobre vehicles
+    description: Operations about vehicles
   - name: third_users
-    description: Operations sobre third_users
+    description: Operations about third_users
   - name: third_vehicles
-    description: Operations sobre third_vehicles
+    description: Operations about third_vehicles
 
 paths:
   /users:
@@ -352,17 +352,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ThirdPartyUserWrapper'
+              $ref: '#/components/schemas/UserThird'
       responses:
         '201':
           description: Tercer usuario creado
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
-
     get:
       tags:
         - third_users
@@ -374,7 +367,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyUserWrapper'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserThird'
 
   /third_users/{id}:
     get:
@@ -396,7 +391,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyUser'
+                $ref: '#/components/schemas/UserThird'
         '400':
           description: Id inválido suministrado
           content:
@@ -444,7 +439,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ThirdPartyUser'
+              $ref: '#/components/schemas/UserThird'
       responses:
         '200':
           description: Tercer usuario actualizado correctamente
@@ -474,16 +469,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
+              $ref: '#/components/schemas/VehicleThird'
       responses:
         '201':
           description: Tercer vehículo creado correctamente
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
     get:
       tags:
         - third_vehicles
@@ -496,8 +485,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                $ref: '#/components/schemas/ThirdPartyVehiclesWrapper'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleThird'
 
   /third_vehicles/{id}:
     get:
@@ -520,7 +510,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyVehicle'
+                $ref: '#/components/schemas/VehicleThird'
         '404':
           description: Tercer vehículo no encontrado
           content:
@@ -547,7 +537,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ThirdPartyVehicle'
+              $ref: '#/components/schemas/VehicleThird'
       responses:
         '200':
           description: Tercer vehículo actualizado correctamente
@@ -600,7 +590,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyVehicle'
+                $ref: '#/components/schemas/VehicleThird'
         '404':
           description: Tercer vehículo no encontrado
           content:
@@ -687,23 +677,7 @@ components:
         - marca
         - fechaFabricacion
 
-    ThirdPartyUserWrapper:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyUser'
-
-    ThirdPartyVehiclesWrapper:
-      type: object
-      properties:
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
-
-    ThirdPartyUser:
+    UserThird:
       type: object
       properties:
         id:
@@ -736,9 +710,10 @@ components:
         vehicles:
           type: array
           items:
-            $ref: '#/components/schemas/ThirdPartyVehicle'
+            $ref: '#/components/schemas/VehicleThird'
 
-    ThirdPartyVehicle:
+    VehicleThird:
+      type: object
       properties:
         id:
           type: integer

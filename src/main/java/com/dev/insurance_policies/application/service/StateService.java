@@ -13,6 +13,10 @@ public class StateService {
 
     private final StateRepository stateRepository;
 
+    public void save(State state) {
+        stateRepository.save(state);
+    }
+
     public Optional<State> findById(Long id) {
         return stateRepository.findById(id);
     }

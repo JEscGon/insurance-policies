@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +14,8 @@ public class Part {
     private Long id;
 
     private Long policyId;
-    private List<Long> thirdPartyIds;
-    private List<Long> thirdPartyVehicleIds;
+    private Long thirdPartyId;
+    private Long thirdPartyVehicleId;
     private Long stateId;
 
     private String placeEvent;

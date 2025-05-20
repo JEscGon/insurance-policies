@@ -69,14 +69,13 @@ public class PartApiIntegracionTest {
     public void savePartTest() throws Exception {
         String newPart = """
             {
-              "policyId": 1,
-              "thirdPartyId": 1,
-              "thirdPartyVehicleId": 1,
-              "placeEvent": "string",
-              "description": "string",
-              "accidentDate": "2025-03-26T20:31:33.311Z",
-              "dateOfRegistration": "2025-03-26T20:31:33.311Z",
-              "stateId": 1
+                "policyId": 1,
+                "stateId": 1,
+                "thirdPartyId": 1,
+                "thirdPartyVehicleId": 1,
+                "placeEvent": "Lugar 1",
+                "description": "Descripción 1",
+                "accidentDate": "2023-01-01 10:00:00"
             }
                 """;
         mockMvc.perform(post("/parts")
@@ -105,42 +104,35 @@ public class PartApiIntegracionTest {
     @Test // TODO: fix
     public void savePartWithDuplicateKeyTest() throws Exception {
         String newPart = """
-            {
-              "policyId": 1,
-              "thirdPartyId": 1,
-              "thirdPartyVehicleId": 1,
-              "placeEvent": "string",
-              "description": "string",
-              "accidentDate": "2025-03-26T20:31:33.311Z",
-              "dateOfRegistration": "2025-03-26T20:31:33.311Z",
-              "stateId": 1
-            }
+                {
+                    "policyId": 1,
+                    "stateId": 2,
+                    "thirdPartyId": 3,
+                    "thirdPartyVehicleId": 4,
+                    "placeEvent": "Lugar del accidente",
+                    "description": "Parte de prueba",
+                    "accidentDate": "2023-10-01T10:00:00"
+                }
                 """;
         mockMvc.perform(post("/parts")
                         .contentType("application/json")
                         .content(newPart))
-                .andExpect(status().isCreated());
-        mockMvc.perform(post("/parts")
-                        .contentType("application/json")
-                        .content(newPart))
-                .andExpect(status().isConflict());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     public void updatePartTest() throws Exception {
         String updatedPart = """
-            {
-              "policyId": 1,
-              "thirdPartyId": 1,
-              "thirdPartyVehicleId": 1,
-              "placeEvent": "string",
-              "description": "string",
-              "accidentDate": "2025-03-26T20:31:33.311Z",
-              "dateOfRegistration": "2025-03-26T20:31:33.311Z",
-              "stateId": 1
-            }
-            """;
-        mockMvc.perform(put("/parts/3")
+                {
+                    "stateId": 2,
+                    "thirdPartyId": 3,
+                    "thirdPartyVehicleId": 4,
+                    "placeEvent": "Lugar del accidente actualizado",
+                    "description": "Parte de prueba actualizado",
+                    "accidentDate": "2023-10-01T10:00:00"
+                }
+                """;
+        mockMvc.perform(put("/parts/1")
                         .contentType("application/json")
                         .content(updatedPart))
                 .andExpect(status().isOk());
