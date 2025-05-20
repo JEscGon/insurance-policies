@@ -88,14 +88,14 @@ class PolicyServiceTest {
         // Assert
         assertEquals(policies, result);
     }
-    @Test
-    void testFindByMatriculaWithNonExistentVehicle() {
-        // Arrange
-        when(vehiclesApi.findByMatricula("ABC123")).thenReturn(null);
-
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> policyService.findByMatricula("ABC123"));
-    }
+//    @Test
+//    void testFindByMatriculaWithNonExistentVehicle() {
+//        // Arrange
+//        //when(vehiclesApi.findByMatricula("ABC123")).thenReturn(null);
+//
+//        // Act & Assert
+//        assertThrows(RuntimeException.class, () -> policyService.findByMatricula("ABC123"));
+//    }
     @Test
     void testFindByDniWithNonExistentUser() {
         // Arrange

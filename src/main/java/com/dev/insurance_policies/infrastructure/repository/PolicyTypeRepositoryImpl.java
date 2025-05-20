@@ -29,12 +29,9 @@ public class PolicyTypeRepositoryImpl implements PolicyTypeRepository {
 
     @Override
     public void save(PolicyType policyType) {
-
     }
-
     @Override
     public void deleteById(Long id) {
-
     }
 
 
