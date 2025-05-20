@@ -2,13 +2,19 @@ package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.repository.PartRepository;
+import com.dev.insurance_policies.infrastructure.repository.jpa.PartThirdPartyJpaRepository;
+import com.dev.insurance_policies.infrastructure.repository.jpa.PartThirdPartyVehicleJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.StateJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
-import com.dev.insurance_policies.infrastructure.repository.jpa.entity.StateEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartThirdPartyEntity;
+import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartThirdPartyVehicleEntity;
+import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
+import com.dev.insurance_users.generated.client.api.ThirdVehiclesApi;
 import com.dev.insurance_policies.infrastructure.repository.mapper.PartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,24 +29,50 @@ public class PartRepositoryImpl implements PartRepository {
     private final PartJpaRepository partJpaRepository;
     private final StateJpaRepository stateJpaRepository;
 
-    @Override     //TODO : FIX ID PROBLEM
+    //Asociacion con PartThirdParty y PartThirdPartyVehicle
+    private final ThirdUsersApi thirdUsersApi;
+    private final ThirdVehiclesApi thirdVehiclesApi;
+    private final PartThirdPartyVehicleJpaRepository partThirdPartyVehicleJpaRepository;
+    private final PartThirdPartyJpaRepository partThirdPartyJpaRepository;
+
+    @Override
+    @Transactional
     public void save(Part part) {
         var partEntity = partMapper.fromDomainToEntity(part);
-        if(part.getId() == null){
+        if (part.getId() == null) {
             partEntity.setDateOfRegistration(LocalDateTime.now());
         } else {
             Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
-            if(partEntityOptional.isPresent()){
+            if (partEntityOptional.isPresent()) {
                 var existingPart = partEntityOptional.get();
-                existingPart.setThirdPartyId(part.getThirdPartyId());
-                existingPart.setThirdPartyVehicleId(part.getThirdPartyVehicleId());
                 partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
                 partEntity.setDateOfLastUpdate(LocalDateTime.now());
                 partMapper.updatePartFromExisting(existingPart, partEntity);
             }
         }
+        // Guardar estado
         partEntity.setState(stateJpaRepository.findById(1L)
                 .orElseThrow(() -> new IllegalArgumentException("State not found")));
+
+        // Guardar entidad principal
+        partJpaRepository.save(partEntity);
+
+
+        part.getThirdPartyIds().forEach(thirdPartyId -> {
+            var thirdPartyEntity = new PartThirdPartyEntity();
+            thirdPartyEntity.setPart(partEntity);
+            thirdPartyEntity.setThirdPartyId(thirdPartyId);
+            partThirdPartyJpaRepository.save(thirdPartyEntity);
+        });
+
+
+        part.getThirdPartyVehicleIds().forEach(thirdPartyVehicleId -> {
+            var thirdPartyVehicleEntity = new PartThirdPartyVehicleEntity();
+            thirdPartyVehicleEntity.setPart(partEntity);
+            thirdPartyVehicleEntity.setThirdPartyVehicleId(thirdPartyVehicleId);
+            partThirdPartyVehicleJpaRepository.save(thirdPartyVehicleEntity);
+        });
+
         partJpaRepository.save(partEntity);
     }
 

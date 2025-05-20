@@ -2,9 +2,7 @@ package com.dev.insurance_policies.infrastructure.repository.jpa.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,12 +28,12 @@ public class PartEntity {
     @JoinColumn(name = "state_id", nullable = false)
     private StateEntity state;
 
-    //    @ManyToOne
-    @Column(name = "third_party_id")
-    private List<Long> thirdPartyId;
-    //    @ManyToOne
-    @Column(name = "third_party_vehicle_id")
-    private List<Long> thirdPartyVehicleId;
+    @Transient
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PartThirdPartyEntity> thirdPartyIds;
+    @Transient
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PartThirdPartyVehicleEntity> thirdPartyVehicleIds;
 
     private String placeEvent;
     private String description;

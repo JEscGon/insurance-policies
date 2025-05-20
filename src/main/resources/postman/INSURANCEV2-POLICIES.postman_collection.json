@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "30e66303-93f3-4456-8fc3-e47537963dca",
-		"name": "INSURANCEV2-POLICIES",
+		"name": "INSURANCEV2-POLICIES  :: 81",
 		"description": "Crear un usuario: POST [http://localhost:8080/users](http://localhost:8080/users)  \nObtener un usuario por ID: GET [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})  \nObtener todos los usuarios: GET [http://localhost:8080/users](http://localhost:8080/users)  \nActualizar un usuario por ID: PUT [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})  \nEliminar un usuario por ID: DELETE [http://localhost:8080/users/{id}](http://localhost:8080/users/{id})",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "21757430"
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 4,\r\n  \"vehicleId\": 5,\r\n  \"beneficiaryId\": 1,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES91210004180532\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
+							"raw": "{\r\n  \"userId\": 3,\r\n  \"vehicleId\": 3,\r\n  \"beneficiaryId\": 3,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES9121800080532\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -95,19 +95,19 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 4,\r\n  \"vehicleId\": 5,\r\n  \"beneficiaryId\": 1,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES91210004180532\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
+							"raw": "{\r\n  \"userId\": 4,\r\n  \"vehicleId\": 5,\r\n  \"beneficiaryId\": 1,\r\n  \"policyTypeId\": 2,\r\n  \"iban\": \"ES912100041832\",\r\n  \"startDate\": \"2023-01-01\",\r\n  \"endDate\": \"2024-01-01\",\r\n  \"active\": true,\r\n  \"premiumAmount\": 500,\r\n  \"parts\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8081/policies/1"
+						"url": "http://localhost:8081/policies/2"
 					},
 					"response": []
 				},
 				{
-					"name": "findByMatricula",
+					"name": "findByMatricula  -- fix",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -154,7 +154,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"policyId\": 1,\r\n  \"thirdPartyId\": 1,\r\n  \"thirdPartyVehicleId\": 1,\r\n  \"placeEvent\": \"string\",\r\n  \"description\": \"string\",\r\n  \"accidentDate\": \"2025-03-26T20:31:33.311Z\",\r\n  \"dateOfRegistration\": \"2025-03-26T20:31:33.311Z\",\r\n  \"stateId\": 1\r\n}",
+							"raw": "{\r\n  \"policyId\": 11,  \r\n\"thirdPartyId\": [11, 12],\r\n\"thirdPartyVehicleId\": [11, 12],  \r\n  \"placeEvent\": \"Madrid, España\",\r\n  \"description\": \"Colisión entre dos vehículos en una intersección.\",\r\n  \"accidentDate\": \"2023-10-01T14:30:00Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -166,7 +166,7 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Update  --  FIX",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -187,7 +187,8 @@
 					"name": "findAllByPolicyId",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "http://localhost:8081/parts/policy/1"
 					},
 					"response": []
 				}

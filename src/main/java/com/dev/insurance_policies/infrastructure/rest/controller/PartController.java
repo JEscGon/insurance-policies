@@ -4,14 +4,10 @@ import com.dev.insurance_policies.application.service.PartService;
 import com.dev.insurance_policies.generated.controller.api.PartsApi;
 import com.dev.insurance_policies.generated.controller.model.PartDto;
 import com.dev.insurance_policies.infrastructure.rest.mapper.PartDtoMapper;
-
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -42,6 +38,7 @@ public class PartController implements PartsApi {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @Override
     public ResponseEntity<Void> deletePartById(Integer id){
         if (!partService.existsById(Long.valueOf(id))) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

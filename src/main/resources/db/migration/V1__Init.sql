@@ -42,15 +42,28 @@ CREATE TABLE policies (
     premium_amount BIGINT NOT NULL
 );
 
+-- Crear tabla Parts
 CREATE TABLE parts (
     id SERIAL PRIMARY KEY,
     policy_id BIGINT NOT NULL REFERENCES policies(id),
-    third_party_id BIGINT[] NOT NULL,
-    third_party_vehicle_id BIGINT[] NOT NULL,
     place_event VARCHAR(255) NOT NULL,
     description TEXT,
     accident_date TIMESTAMP NOT NULL,
     date_of_registration TIMESTAMP NOT NULL,
     date_of_last_update TIMESTAMP NULL,
     state_id BIGINT REFERENCES state(id)
+);
+
+-- Crear tabla para third_party_id
+CREATE TABLE part_third_party (
+    part_id BIGINT NOT NULL REFERENCES parts(id),
+    third_party_id BIGINT NOT NULL,
+    PRIMARY KEY (part_id, third_party_id)
+);
+
+-- Crear tabla para third_party_vehicle_id
+CREATE TABLE part_third_party_vehicle (
+    part_id BIGINT NOT NULL REFERENCES parts(id),
+    third_party_vehicle_id BIGINT NOT NULL,
+    PRIMARY KEY (part_id, third_party_vehicle_id)
 );

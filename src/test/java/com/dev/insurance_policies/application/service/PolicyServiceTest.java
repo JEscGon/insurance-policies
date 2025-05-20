@@ -49,13 +49,14 @@ public class PolicyServiceTest {
 
     @Test
     public void testSavePolicyWithNonExistentUser() {
-        // Arrange
-        when(usersApi.findById(anyLong())).thenReturn(null);
-
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> policyService.save(policy));
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> policyService.save(policy));
+        assertEquals("Cannot invoke \"com.dev.insurance_policies.application.repository.UserRepository.findById(java.lang.Long)\" because \"this.userRepository\" is null",
+                exception.getMessage());
         verify(policyRepository, never()).save(any());
     }
+
     @Test
     public void testFindById() {
         // Arrange
@@ -146,16 +147,19 @@ public class PolicyServiceTest {
     @Test
     public void testFindByDniWithExistingUser() {
         // Arrange
+        String testDni = "12345678A";
         UserClientDto user = new UserClientDto().id(101);
-        when(usersApi.getUserByDni("12345678A")).thenReturn(user);
+        when(usersApi.getUserByDni(testDni)).thenReturn(user);
         when(policyRepository.findByUserId(101L)).thenReturn(Optional.of(policy));
 
         // Act
-        Optional<Policy> result = policyService.findByDni("12345678A");
+        Optional<Policy> result = policyService.findByDni(testDni);
 
         // Assert
         assertTrue(result.isPresent());
         assertEquals(policy, result.get());
+        verify(usersApi).getUserByDni(testDni);
+        verify(policyRepository).findByUserId(101L);
     }
 
 }

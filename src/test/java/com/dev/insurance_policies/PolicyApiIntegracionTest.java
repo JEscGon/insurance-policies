@@ -1,29 +1,19 @@
 package com.dev.insurance_policies;
 
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyJpaRepository;
-import com.dev.insurance_users.generated.client.ApiClient;
 import com.dev.insurance_users.generated.client.api.UsersApi;
-import org.hibernate.annotations.NotFound;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -129,6 +119,7 @@ public class PolicyApiIntegracionTest {
                         .content(newPolicy))
                 .andExpect(status().isCreated());
     }
+
     @Test
     public void savePolicyWithInvalidDataTest() throws Exception {
         String newPolicy = """
@@ -149,6 +140,7 @@ public class PolicyApiIntegracionTest {
                         .content(newPolicy))
                 .andExpect(status().isConflict());
     }
+
     @Test //TODO : duplicated key
     public void saveWithDuplicateKeyTest() throws Exception {
         String newPolicy = """

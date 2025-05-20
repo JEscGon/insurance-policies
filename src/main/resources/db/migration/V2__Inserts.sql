@@ -22,14 +22,38 @@ INSERT INTO policies (user_id, vehicle_id, beneficiary_id, iban, start_date, end
 (20, 20, 20, 'ES7921000813610123456808', '2023-08-15', '2024-08-15', '2023-08-15', NULL, 2, TRUE, 2900);
 
 -- Insertar valores en parts
-INSERT INTO parts (policy_id, third_party_id, third_party_vehicle_id, place_event, description, accident_date, date_of_registration, date_of_last_update, state_id) VALUES
-(1, ARRAY[1, 2], ARRAY[1, 2], 'Lugar 1', 'Descripción 1', '2023-01-01 10:00:00', '2023-01-01 12:00:00', NULL, 1),
-(2, ARRAY[2, 3], ARRAY[2, 3], 'Lugar 2', 'Descripción 2', '2023-02-01 10:00:00', '2023-02-01 12:00:00', NULL, 2),
-(3, ARRAY[3, 4], ARRAY[3, 4], 'Lugar 3', 'Descripción 3', '2023-03-01 10:00:00', '2023-03-01 12:00:00', NULL, 3),
-(4, ARRAY[4, 5], ARRAY[4, 5], 'Lugar 4', 'Descripción 4', '2023-04-01 10:00:00', '2023-04-01 12:00:00', NULL, 4),
-(5, ARRAY[5, 6], ARRAY[5, 6], 'Lugar 5', 'Descripción 5', '2023-05-01 10:00:00', '2023-05-01 12:00:00', NULL, 1),
-(6, ARRAY[6, 7], ARRAY[6, 7], 'Lugar 6', 'Descripción 6', '2023-06-01 10:00:00', '2023-06-01 12:00:00', NULL, 2),
-(7, ARRAY[7, 8], ARRAY[7, 8], 'Lugar 7', 'Descripción 7', '2023-07-01 10:00:00', '2023-07-01 12:00:00', NULL, 3),
-(8, ARRAY[8, 9], ARRAY[8, 9], 'Lugar 8', 'Descripción 8', '2023-08-01 10:00:00', '2023-08-01 12:00:00', NULL, 4),
-(9, ARRAY[9, 10], ARRAY[9, 10], 'Lugar 9', 'Descripción 9', '2023-09-01 10:00:00', '2023-09-01 12:00:00', NULL, 1),
-(10, ARRAY[10, 11], ARRAY[10, 11], 'Lugar 10', 'Descripción 10', '2023-10-01 10:00:00', '2023-10-01 12:00:00', NULL, 2)
+INSERT INTO parts (policy_id, place_event, description, accident_date, date_of_registration, date_of_last_update, state_id) VALUES
+(1, 'Lugar 1', 'Descripción 1', '2023-01-01 10:00:00', '2023-01-01 12:00:00', NULL, 1),
+(2, 'Lugar 2', 'Descripción 2', '2023-02-01 10:00:00', '2023-02-01 12:00:00', NULL, 2),
+(3, 'Lugar 3', 'Descripción 3', '2023-03-01 10:00:00', '2023-03-01 12:00:00', NULL, 3),
+(4, 'Lugar 4', 'Descripción 4', '2023-04-01 10:00:00', '2023-04-01 12:00:00', NULL, 4),
+(5, 'Lugar 5', 'Descripción 5', '2023-05-01 10:00:00', '2023-05-01 12:00:00', NULL, 1),
+(6, 'Lugar 6', 'Descripción 6', '2023-06-01 10:00:00', '2023-06-01 12:00:00', NULL, 2),
+(7, 'Lugar 7', 'Descripción 7', '2023-07-01 10:00:00', '2023-07-01 12:00:00', NULL, 3),
+(8, 'Lugar 8', 'Descripción 8', '2023-08-01 10:00:00', '2023-08-01 12:00:00', NULL, 4),
+(9, 'Lugar 9', 'Descripción 9', '2023-09-01 10:00:00', '2023-09-01 12:00:00', NULL, 1),
+(10, 'Lugar 10', 'Descripción 10', '2023-10-01 10:00:00', '2023-10-01 12:00:00', NULL, 2);
+
+-- Insertar valores en part_third_party
+INSERT INTO part_third_party (part_id, third_party_id) VALUES
+(1, 1), (1, 2),
+(2, 2), (2, 3),
+(3, 3), (3, 4),
+(4, 4), (4, 5),
+(5, 5), (5, 6),
+(6, 6), (6, 7),
+(7, 7), (7, 8),
+(8, 8), (8, 9),
+(9, 9), (9, 10),
+(10, 10), (10, 11);
+
+-- Insertar valores en part_third_party_vehicle
+INSERT INTO part_third_party_vehicle (part_id, third_party_vehicle_id) VALUES
+(1, 1), (1, 2),
+(2, 2), (2, 3),
+(3, 3), (3, 4),
+(4, 4), (4, 5),
+(5, 5), (5, 6),
+(6, 6), (6, 7),
+(7, 7), (7, 8),
+(8, 8), (8, 9);

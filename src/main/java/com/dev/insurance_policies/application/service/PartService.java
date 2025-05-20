@@ -3,14 +3,12 @@ package com.dev.insurance_policies.application.service;
 import com.dev.insurance_policies.application.domain.Part;
 import com.dev.insurance_policies.application.repository.PartRepository;
 import com.dev.insurance_policies.application.repository.PolicyRepository;
+import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
 import com.dev.insurance_users.generated.client.api.ThirdVehiclesApi;
 import com.dev.insurance_users.generated.client.api.UsersApi;
-import com.dev.insurance_users.generated.client.api.VehiclesApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
