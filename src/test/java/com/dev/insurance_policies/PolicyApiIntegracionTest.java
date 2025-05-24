@@ -2,6 +2,7 @@ package com.dev.insurance_policies;
 
 import com.dev.insurance_policies.infrastructure.repository.jpa.PolicyJpaRepository;
 import com.dev.insurance_users.generated.client.api.UsersApi;
+import com.dev.insurance_users.generated.client.model.UserClientDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -54,6 +55,8 @@ class PolicyApiIntegracionTest {
 
     @Test
     void findPolicyBuDniTest() throws Exception {
+        when(apiClient.getUserByDni("12345678A"))
+                .thenReturn(new UserClientDto());
         mockMvc.perform(get("/policies/dni/12345678A"))
                 .andExpect(status().isOk());
     }
@@ -82,7 +85,7 @@ class PolicyApiIntegracionTest {
         mockMvc.perform(get("/policies/vehicle/1234ABC"))
                 .andExpect(status().isOk());
     }
-    @Test //TODO: ver como comprobar la respuesta ya que llama a otro microservicio
+    @Test
     void findPolicyByNonExistentMatriculaTest() throws Exception {
         mockMvc.perform(get("/policies/vehicle/9999XYZ"))
                 .andExpect(status().isNotFound());
@@ -101,6 +104,8 @@ class PolicyApiIntegracionTest {
 
     @Test
     void savePolicyTest() throws Exception {
+        when(apiClient.findById(1L)).thenReturn(new UserClientDto()); // Simula que el usuario existe
+
         String newPolicy = """
                 {
                     "userId": 1,
@@ -122,6 +127,8 @@ class PolicyApiIntegracionTest {
 
     @Test
     void savePolicyWithInvalidDataTest() throws Exception {
+        when(apiClient.findById(1L)).thenReturn(new UserClientDto()); // Simula que el usuario existe
+
         String newPolicy = """
                 {
                     "userId": 1,
@@ -143,6 +150,7 @@ class PolicyApiIntegracionTest {
 
     @Test //TODO : duplicated key
     void saveWithDuplicateKeyTest() throws Exception {
+        when(apiClient.findById(1L)).thenReturn(new UserClientDto()); // Simula que el usuario existe
         String newPolicy = """
                 {
                     "userId": 1,
@@ -157,17 +165,20 @@ class PolicyApiIntegracionTest {
                 }
                 """;
         mockMvc.perform(post("/policies")
-                        .contentType("application/json")
-                        .content(newPolicy))
-                        .andExpect(status().isCreated());
+                .contentType("application/json")
+                .content(newPolicy))
+                .andExpect(status().isCreated());
+
         mockMvc.perform(post("/policies")
-                        .contentType("application/json")
-                        .content(newPolicy))
-                        .andExpect(status().isConflict());
+                .contentType("application/json")
+                .content(newPolicy))
+                .andExpect(status().isConflict());
     }
 
     @Test // TODO:
     void updatePolicyTest() throws Exception {
+        when(apiClient.findById(1L)).thenReturn(new UserClientDto()); // Simula que el usuario existe
+
         String updatedPolicy = """
                 {
                     "userId": 1,
@@ -175,11 +186,11 @@ class PolicyApiIntegracionTest {
                     "startDate": "2023-01-01",
                     "endDate": "2024-01-01",
                     "premiumAmount": 600,
-                    "iban": "ES7620770024003102575766",
+                    "iban": "------------------------",
                     "active": true
                 }
                 """;
-        mockMvc.perform(put("/policies/1")
+        mockMvc.perform(put("/policies/2")
                         .contentType("application/json")
                         .content(updatedPolicy))
                 .andExpect(status().isOk());

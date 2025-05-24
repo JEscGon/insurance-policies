@@ -47,7 +47,6 @@ public class PolicyControllerTest {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
     }
-
     private Policy createPolicy() {
         Policy policy = new Policy();
         policy.setId(1L);

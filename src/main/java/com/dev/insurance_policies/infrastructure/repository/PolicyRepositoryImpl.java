@@ -72,5 +72,11 @@ public class PolicyRepositoryImpl implements PolicyRepository {
                 .map(policyMapper::fromEntityToDomain);
     }
 
+    @Override
+    public Optional<Policy> findByVehicleId(Long vehicleId) {
+        return policyJpaRepository.findByVehicleId(vehicleId)
+                .map(policyMapper::fromEntityToDomain);
+    }
+
 
 }

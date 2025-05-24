@@ -1,6 +1,7 @@
 package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
+import com.dev.insurance_policies.infrastructure.repository.jpa.StateJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PolicyEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
@@ -25,13 +26,12 @@ public class PartRepositoryImplTest {
 
     @Mock
     private PartJpaRepository partJpaRepository;
-
+    @Mock
+    private StateJpaRepository stateJpaRepository;
     @Mock
     private PartMapper partMapper;
-
     @InjectMocks
     private PartRepositoryImpl partRepository;
-
     private Part part;
     private PartEntity partEntity;
 
@@ -57,10 +57,8 @@ public class PartRepositoryImplTest {
         // Arrange
         when(partJpaRepository.findById(1L)).thenReturn(Optional.of(partEntity));
         when(partMapper.fromEntityToDomain(partEntity)).thenReturn(part);
-
         // Act
         Optional<Part> result = partRepository.findById(1L);
-
         // Assert
         assertTrue(result.isPresent());
         assertEquals(part, result.get());
@@ -70,14 +68,11 @@ public class PartRepositoryImplTest {
     void testFindByIdWhenNotExists() {
         // Arrange
         when(partJpaRepository.findById(2L)).thenReturn(Optional.empty());
-
         // Act
         Optional<Part> result = partRepository.findById(2L);
-
         // Assert
         assertFalse(result.isPresent());
     }
-
     @Test
     void testDeleteById() {
         // Act
@@ -86,7 +81,6 @@ public class PartRepositoryImplTest {
         // Assert
         verify(partJpaRepository).deleteById(1L);
     }
-
     @Test
     void testFindAll() {
         // Arrange
@@ -101,7 +95,6 @@ public class PartRepositoryImplTest {
         assertEquals(1, results.size());
         assertEquals(part, results.get(0));
     }
-
     @Test
     void testFindAllByPolicyId() {
         // Arrange
@@ -118,17 +111,17 @@ public class PartRepositoryImplTest {
         verify(partJpaRepository).findAllByPolicyId(101L);
     }
 
-    @Test
+    @Test //TODO: FIX TEST
     void testSaveNewPart() {
 
     }
 
-    @Test
+    @Test  //TODO: FIX TEST
     void testSavePartDuplicatedKey() {
 
     }
 
-    @Test
+    @Test  //TODO: FIX TEST
     void testUpdateExistingPart() {
 
     }

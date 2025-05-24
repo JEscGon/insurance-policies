@@ -30,11 +30,10 @@ public class PolicyRepositoryImplTest {
     @InjectMocks
     private PolicyRepositoryImpl policyRepository;
 
-//    @BeforeEach
-//    void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//        policyRepository = new PolicyRepositoryImpl(policyMapper, policyJpaRepository, policyTypeJpaRepository);
-//    }
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void testSave() {

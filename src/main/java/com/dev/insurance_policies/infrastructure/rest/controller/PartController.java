@@ -19,6 +19,11 @@ public class PartController implements PartsApi {
 
     @Override //TODO :
     public ResponseEntity<Void> savePart(PartDto partDto){
+        // CAMBIAR CONTRATO PARA QUE YA NO SE RECIBAN LOS VEHICULOS Y QUE SOLO SE RECIBAN LOS USUARIOS
+        // BORRAR LA TABLA DE VEHICULOS Y EL SALVADO EN BBDD DE ESO
+
+
+
         partService.save(partDtoMapper.fromDtoToDomain(partDto));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

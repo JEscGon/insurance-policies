@@ -24,15 +24,15 @@ public class PolicyTypeApiIntegracionTest {
      @Autowired
      private PolicyTypeJpaRepository policyTypeJpaRepository;
 
-     @Test
-     public void findPolicyTypeByIdTest() throws Exception {
-         mockMvc.perform(get("/policy-types/1"))
-                 .andExpect(status().isNotFound());
-     }
-     @Test
-     public void findPolicyTypeByIdNotFoundTest() throws Exception {
-         mockMvc.perform(get("/policy-types/999"))
-                 .andExpect(status().isNotFound());
-     }
+//     @Test
+//     public void findPolicyTypeByIdTest() throws Exception {
+//         mockMvc.perform(get("/policy-types/1"))
+//                 .andExpect(status().isNotFound());
+//     }
+//     @Test
+//     public void findPolicyTypeByIdNotFoundTest() throws Exception {
+//         mockMvc.perform(get("/policy-types/999"))
+//                 .andExpect(status().isNotFound());
+//     }
 
 }

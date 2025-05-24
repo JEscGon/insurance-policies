@@ -1,12 +1,10 @@
 package com.dev.insurance_policies.infrastructure.repository;
 
 import com.dev.insurance_policies.application.domain.Part;
+import com.dev.insurance_policies.application.exception.ResourceNotFoundException;
 import com.dev.insurance_policies.application.repository.PartRepository;
-import com.dev.insurance_policies.infrastructure.repository.jpa.PartThirdPartyJpaRepository;
-import com.dev.insurance_policies.infrastructure.repository.jpa.PartThirdPartyVehicleJpaRepository;
-import com.dev.insurance_policies.infrastructure.repository.jpa.StateJpaRepository;
+import com.dev.insurance_policies.infrastructure.repository.jpa.*;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartEntity;
-import com.dev.insurance_policies.infrastructure.repository.jpa.PartJpaRepository;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartThirdPartyEntity;
 import com.dev.insurance_policies.infrastructure.repository.jpa.entity.PartThirdPartyVehicleEntity;
 import com.dev.insurance_users.generated.client.api.ThirdUsersApi;
@@ -28,25 +26,45 @@ public class PartRepositoryImpl implements PartRepository {
     private final PartMapper partMapper;
     private final PartJpaRepository partJpaRepository;
     private final StateJpaRepository stateJpaRepository;
-
-    //Asociacion con PartThirdParty y PartThirdPartyVehicle
     private final ThirdUsersApi thirdUsersApi;
     private final ThirdVehiclesApi thirdVehiclesApi;
     private final PartThirdPartyVehicleJpaRepository partThirdPartyVehicleJpaRepository;
     private final PartThirdPartyJpaRepository partThirdPartyJpaRepository;
+    private final PolicyJpaRepository policyJpaRepository;
 
     @Override
     @Transactional
     public void save(Part part) {
+        // Validar póliza
+        policyJpaRepository.findById(part.getPolicyId())
+            .orElseThrow(() -> new ResourceNotFoundException("La póliza no existe"));
+
+//        // Validar vehículos de terceros
+//        part.getThirdPartyVehicleIds().forEach(vehicleId -> {
+//            try {
+//                thirdVehiclesApi.getThirdVehicleById(vehicleId);
+//            } catch (Exception e) {
+//                throw new ResourceNotFoundException("Vehículo tercero no encontrado: " + vehicleId);
+//            }
+//        });
+//
+//        // Validar usuarios terceros
+//        part.getThirdPartyIds().forEach(userId -> {
+//            try {
+//                thirdUsersApi.findThirdUserById(userId);
+//            } catch (Exception e) {
+//                throw new IllegalArgumentException("Usuario tercero no encontrado: " + userId);
+//            }
+//        });
 
         var partEntity = partMapper.fromDomainToEntity(part);
 
         if (part.getId() == null) { // CREAR
+
             partEntity.setDateOfRegistration(LocalDateTime.now());
 
             partEntity.setState(stateJpaRepository.findById(1L)
-                    //TODO: excepcion personalizada ResorceNotFoundException
-                    .orElseThrow(() -> new IllegalArgumentException("State not found")));
+                    .orElseThrow(() -> new ResourceNotFoundException("State not found")));
 
         } else { // ACTUALIZAR
             Optional<PartEntity> partEntityOptional = partJpaRepository.findById(part.getId());
@@ -54,8 +72,7 @@ public class PartRepositoryImpl implements PartRepository {
                 var existingPart = partEntityOptional.get();
                 partEntity.setDateOfRegistration(existingPart.getDateOfRegistration());
                 partEntity.setDateOfLastUpdate(LocalDateTime.now());
-                //TODO: excepcion personalizada ResorceNotFoundException
-                partEntity.setState(stateJpaRepository.findById(existingPart.getState().getId()).orElseThrow(() -> new IllegalArgumentException("State not found")));
+                partEntity.setState(stateJpaRepository.findById(existingPart.getState().getId()).orElseThrow(() -> new ResourceNotFoundException("State not found")));
                 partMapper.updatePartFromExisting(existingPart, partEntity);
             }
         }

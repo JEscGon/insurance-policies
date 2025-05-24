@@ -35,15 +35,6 @@ public class StateServiceTest {
         state.setDescription("Estado para solicitudes en procesamiento");
     }
 
-//    @Test
-//    void testSaveState() {
-//        // Act
-//        stateService.save(state);
-//
-//        // Assert
-//        verify(stateRepository).save(state);
-//    }
-
     @Test
     void testFindByIdWhenExists() {
         // Arrange

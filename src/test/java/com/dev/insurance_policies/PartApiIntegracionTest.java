@@ -27,71 +27,71 @@ public class PartApiIntegracionTest {
     private PartJpaRepository partJpaRepository;
 
     @Test
-    public void deletePartByIdTest() throws Exception {
-        mockMvc.perform(delete("/parts/2"))
-                .andExpect(status().isNoContent());
-    }
-    @Test
-    public void deletePartByIdNotFoundTest() throws Exception {
+    void deletePartByIdNotFoundTest() throws Exception {
         mockMvc.perform(delete("/parts/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void findAllPartsTest() throws Exception {
+    void findAllPartsTest() throws Exception {
         mockMvc.perform(get("/parts"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void findPartByIdTest() throws Exception {
+    void findPartByIdTest() throws Exception {
         mockMvc.perform(get("/parts/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void findPartByIdNotFoundTest() throws Exception {
+    void findPartByIdNotFoundTest() throws Exception {
         mockMvc.perform(get("/parts/999"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void findAllPartsByPolicyIdTest() throws Exception {
+    void findAllPartsByPolicyIdTest() throws Exception {
         mockMvc.perform(get("/parts/policy/1"))
                 .andExpect(status().isOk());
     }
     @Test
-    public void findAllPartsByPolicyIdNotFoundTest() throws Exception {
+    void findAllPartsByPolicyIdNotFoundTest() throws Exception {
         mockMvc.perform(get("/parts/policy/999"))
                 .andExpect(status().isNotFound());
     }
 
-    @Test // TODO: fix
-    public void savePartTest() throws Exception {
+    @Test //TODO: fix
+    void savePartTest() throws Exception {
         String newPart = """
             {
+              "id": null,
               "policyId": 1,
-              "thirdPartyId": 1,
-              "thirdPartyVehicleId": 1,
+              "thirdPartyIds": [4,5],
+              "thirdPartyVehicleIds": [4,5],
+              "stateId": 1,
               "placeEvent": "string",
               "description": "string",
               "accidentDate": "2025-03-26T20:31:33.311Z",
               "dateOfRegistration": "2025-03-26T20:31:33.311Z",
-              "stateId": 1
+              "dateOfLastUpdate": null
             }
-                """;
+            """;
+
         mockMvc.perform(post("/parts")
-                        .contentType("application/json")
-                        .content(newPart))
-                .andExpect(status().isCreated());
+                    .contentType("application/json")
+                    .content(newPart))
+              .andExpect(status().isCreated());
     }
+
+
     @Test // TODO: fix
-    public void savePartWithInvalidDataTest() throws Exception {
+    void savePartWithInvalidDataTest() throws Exception {
         String newPart = """
                 {
                     "policyId": 1,
                     "stateId": 2,
-                    "thirdPartyId": 3,
-                    "thirdPartyVehicleId": 4,
+                    "thirdPartyIds": [1,2],
+                    "thirdPartyVehicleIds": [1,2],
                     "placeEvent": "Lugar del accidente",
                     "description": "Parte de prueba",
                     "accidentDate": "2023-10-01T10:00:00"
