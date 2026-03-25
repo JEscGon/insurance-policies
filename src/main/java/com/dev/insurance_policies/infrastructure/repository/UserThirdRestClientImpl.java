@@ -38,7 +38,8 @@ public class UserThirdRestClientImpl implements UserThirdRepository {
         usersThird.stream()
                 .map(userThirdDtoClientMapper::fromDomainToDto)
                 .forEach(userWrapper::addUsersItem);
-        return thirdUsersApi.saveThirdUser(userWrapper);
+        thirdUsersApi.saveThirdUser(userWrapper);
+        return List.of();
     }
 
     @Override

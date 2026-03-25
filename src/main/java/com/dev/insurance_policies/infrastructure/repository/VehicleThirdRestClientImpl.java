@@ -42,7 +42,8 @@ public class VehicleThirdRestClientImpl implements VehicleThirdRepository {
         vehiclesThird.stream()
                 .map(vehicleThirdDtoClientMapper::fromDomainToDto)
                 .forEach(vehicleWrapper::addVehiclesItem);
-        return thirdVehiclesApi.saveThirdVehicle(vehicleWrapper);
+        thirdVehiclesApi.saveThirdVehicle(vehicleWrapper);
+        return List.of();
     }
 
     @Override
