@@ -356,13 +356,6 @@ paths:
       responses:
         '201':
           description: Tercer usuario creado
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
-
     get:
       tags:
         - third_users
@@ -478,12 +471,6 @@ paths:
       responses:
         '201':
           description: Tercer vehículo creado correctamente
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
     get:
       tags:
         - third_vehicles
@@ -686,6 +673,18 @@ components:
         - marca
         - fechaFabricacion
 
+    ThirdPartyInfo:
+      type: object
+      properties:
+        thirdPartyUser:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyUser'
+        thirdPartyVehicle:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyVehicle'
+
     ThirdPartyUserWrapper:
       type: object
       properties:
@@ -779,6 +778,7 @@ components:
         - marca
         - fechaFabricacion
 
+   
     ErrorMessage:
       type: object
       properties:
