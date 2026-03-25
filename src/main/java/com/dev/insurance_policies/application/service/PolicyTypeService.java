@@ -22,6 +22,10 @@ public class PolicyTypeService {
         return policyTypeRepository.findById(id);
     }
 
+    public List<PolicyType> findAll() {
+        return policyTypeRepository.findAll();
+    }
+
     public void deletePolicyTypeById(Long id) {
         policyTypeRepository.deleteById(id);
     }

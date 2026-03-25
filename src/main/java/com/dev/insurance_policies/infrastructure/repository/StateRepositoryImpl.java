@@ -17,19 +17,21 @@ public class StateRepositoryImpl implements StateRepository {
     private final StateMapper stateMapper;
     private final StateJpaRepository stateJpaRepository;
 
-    //TODO: REVISAR ESTO.
-
     @Override
     public Optional<State> findById(Long id) {
-        return Optional.empty();
+        return stateJpaRepository.findById(id)
+                .map(stateMapper::fromEntityToDomain);
     }
 
     @Override
     public List<State> findAll() {
-        return List.of();
+        return stateJpaRepository.findAll().stream()
+                .map(stateMapper::fromEntityToDomain)
+                .toList();
     }
 
     @Override
     public void deleteById(Long id) {
+        stateJpaRepository.deleteById(id);
     }
 }

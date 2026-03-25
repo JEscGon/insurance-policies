@@ -19,19 +19,24 @@ public class PolicyTypeRepositoryImpl implements PolicyTypeRepository {
 
     @Override
     public List<PolicyType> findAll() {
-        return List.of();
+        return policyTypeJpaRepository.findAll().stream()
+                .map(policyTypeMapper::fromEntityToDomain)
+                .toList();
     }
 
     @Override
     public Optional<PolicyType> findById(Long id) {
-        return Optional.empty();
+        return policyTypeJpaRepository.findById(id)
+                .map(policyTypeMapper::fromEntityToDomain);
     }
 
     @Override
     public void save(PolicyType policyType) {
+        policyTypeJpaRepository.save(policyTypeMapper.fromDomainToEntity(policyType));
     }
     @Override
     public void deleteById(Long id) {
+        policyTypeJpaRepository.deleteById(id);
     }
 
 

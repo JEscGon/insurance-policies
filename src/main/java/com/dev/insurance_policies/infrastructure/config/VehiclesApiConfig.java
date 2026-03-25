@@ -14,7 +14,7 @@ public class VehiclesApiConfig {
     @Bean
     public VehiclesApi vehiclesApi(RestTemplate restTemplate) {
         ApiClient apiClient = new ApiClient(restTemplate);
-        apiClient.setBasePath("http://localhost:8080");
+        apiClient.setBasePath("http://insurance-users:8080");
         return new VehiclesApi(apiClient);
     }
 }

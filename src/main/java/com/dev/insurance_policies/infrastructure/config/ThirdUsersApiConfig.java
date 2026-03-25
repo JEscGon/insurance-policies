@@ -10,9 +10,9 @@ import org.springframework.web.client.RestTemplate;
 public class ThirdUsersApiConfig {
 
     @Bean
-    public ThirdUsersApi thirdUsersApi(RestTemplate restTemplate) {;
+    public ThirdUsersApi thirdUsersApi(RestTemplate restTemplate) {
         ApiClient apiClient = new ApiClient(restTemplate);
-        apiClient.setBasePath("http://localhost:8080");
+        apiClient.setBasePath("http://insurance-users:8080");
         return new ThirdUsersApi(apiClient);
     }
 }

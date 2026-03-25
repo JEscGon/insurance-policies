@@ -508,6 +508,7 @@ components:
             $ref: '#/components/schemas/ThirdPartyVehicle'
 
     ThirdPartyVehicle:
+      type: object
       properties:
         id:
           type: integer
@@ -542,7 +543,7 @@ components:
           format: date
           example: "2024-02-20"
       required:
-        - idUser
+        - userThirdId
         - matricula
         - km
         - marca

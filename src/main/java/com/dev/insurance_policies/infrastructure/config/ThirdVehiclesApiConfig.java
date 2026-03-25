@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ThirdVehiclesApiConfig {
     @Bean
-    public ThirdVehiclesApi thirdVehiclesApi(RestTemplate restTemplate) {;
+    public ThirdVehiclesApi thirdVehiclesApi(RestTemplate restTemplate) {
         ApiClient apiClient = new ApiClient(restTemplate);
-        apiClient.setBasePath("http://localhost:8080");
+        apiClient.setBasePath("http://insurance-users:8080");
         return new ThirdVehiclesApi(apiClient);
     }
 }
